@@ -2,6 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_website/utils/my_theme.dart';
 import 'package:my_flutter_website/utils/nav_item.dart';
+import 'package:my_flutter_website/widgets/button_selection_clipper_path.dart';
 
 class AppDrawer extends StatefulWidget {
   final GlobalKey<BeamerState> beamerKey;
@@ -32,11 +33,12 @@ class _AppDrawerState extends State<AppDrawer> {
     final path = (context.currentBeamLocation.state as BeamState).uri.path;
     final screenWidth = MediaQuery.of(context).size.width;
     final drawerWidth = screenWidth * 0.4;
-
-    return Container(
-      color: drawerTheme.backgroundColor,
+    return Drawer(
       width: drawerWidth,
-      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 0),
+      backgroundColor: drawerTheme.backgroundColor,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12), bottomRight: Radius.circular(12))),
       child: _getDrawerButtonList(path),
     );
   }
@@ -44,18 +46,21 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget _getDrawerButtonList(String currentPath) {
     const navItemList = NavItem.values;
 
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          final navItem = navItemList[index];
-          return DrawerButton(
-              onPressed: () => _beamerDelegate.beamToNamed(navItem.url),
-              isSelected: currentPath.contains(navItem.url),
-              child: Text(navItem.label));
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(height: 8);
-        },
-        itemCount: navItemList.length);
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: ListView.separated(
+          itemBuilder: (context, index) {
+            final navItem = navItemList[index];
+            return DrawerButton(
+                onPressed: () => _beamerDelegate.beamToNamed(navItem.url),
+                isSelected: currentPath.contains(navItem.url),
+                child: Text(navItem.label));
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(height: 8);
+          },
+          itemCount: navItemList.length),
+    );
   }
 
   @override
@@ -102,24 +107,51 @@ class _DrawerButtonState extends State<DrawerButton> {
   @override
   Widget build(BuildContext context) {
     final drawerTheme = Theme.of(context).extension<MyDrawerTheme>()!;
-    final buttonWidget = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: ElevatedButton(
-        onPressed: widget.onPressed,
-        style: drawerTheme.buttonTheme.style!,
-        statesController: materialStatesController,
-        child: widget.child,
+    final buttonWidget = SizedBox(
+      width: 120,
+      height: 35,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 8, 0),
+        child: ElevatedButton(
+          onPressed: widget.onPressed,
+          style: drawerTheme.buttonTheme.style!,
+          statesController: materialStatesController,
+          child: widget.child,
+        ),
       ),
     );
 
     if (widget.isSelected) {
-      return Container(
-        decoration: BoxDecoration(
-            gradient: RadialGradient(
-          center: Alignment.centerLeft,
-          colors: [const Color(0xFF0dd83d), drawerTheme.backgroundColor],
-        )),
-        child: buttonWidget,
+      return LimitedBox(
+        maxHeight: 35,
+        maxWidth: 120,
+        child: Stack(children: [
+          Positioned(
+            right: 0,
+            top: 0,
+            bottom: 0,
+            left: 0,
+            child: buttonWidget,
+          ),
+          Positioned(
+            left: 0,
+            top: 0,
+            bottom: 0,
+            child: ClipPath(
+              clipper: ButtonSelectionClipperPath(),
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: const Color(0xFF52ea35),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                width: 120,
+                height: 50,
+              ),
+            ),
+          ),
+        ]),
       );
     }
 
