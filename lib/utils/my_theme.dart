@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyDrawerTheme extends ThemeExtension<MyDrawerTheme> {
   final Color backgroundColor;
@@ -44,7 +45,8 @@ class MyDrawerTheme extends ThemeExtension<MyDrawerTheme> {
 final MyDrawerTheme myDrawerLightTheme = MyDrawerTheme(
     backgroundColor: const Color(0xFF1c2229),
     buttonSelectedIndicatorColor: const Color(0xFF0dd83d),
-    buttonTheme: ElevatedButtonThemeData(style: ButtonStyle(
+    buttonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
       backgroundColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.selected) ||
             states.contains(MaterialState.hovered)) {
@@ -52,6 +54,9 @@ final MyDrawerTheme myDrawerLightTheme = MyDrawerTheme(
         }
         return const Color(0xFF1c2229);
       }),
+      textStyle: MaterialStatePropertyAll(GoogleFonts.openSans(
+          textStyle: const TextStyle(overflow: TextOverflow.ellipsis))),
+      padding: const MaterialStatePropertyAll(EdgeInsets.all(8)),
     )));
 
 // final MyDrawerTheme myDrawerDarkTheme = MyDrawerTheme(backgroundColor: const Color(value), buttonSelectedIndicatorColor: buttonSelectedIndicatorColor, buttonTheme: buttonTheme)

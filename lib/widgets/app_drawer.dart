@@ -55,9 +55,19 @@ class _AppDrawerState extends State<AppDrawer> {
             return DrawerButton(
                 onPressed: () => _beamerDelegate.beamToNamed(navItem.url),
                 isSelected: currentPath.contains(navItem.url),
-                child: Text(
-                  navItem.label,
-                  style: GoogleFonts.openSans(),
+                child: Row(
+                  children: [
+                    navItem.icon,
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Flexible(
+                      child: Text(
+                        navItem.label,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
                 ));
           },
           separatorBuilder: (context, index) {
