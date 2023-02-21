@@ -156,7 +156,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  color: const Color(0xFF52ea35),
+                  color: drawerTheme.buttonSelectedIndicatorColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 width: 120,
