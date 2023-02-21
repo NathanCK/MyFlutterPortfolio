@@ -33,9 +33,11 @@ class MyApp extends StatelessWidget {
         child: MaterialApp.router(
           routerDelegate: routerDelegate,
           routeInformationParser: BeamerParser(),
-          theme: ThemeData.light().copyWith(extensions: [
-            myDrawerLightTheme,
-          ]),
+          theme: ThemeData.light().copyWith(
+              bottomNavigationBarTheme: myBottomNavigationBarThemeData,
+              extensions: [
+                myDrawerLightTheme,
+              ]),
         ));
   }
 }

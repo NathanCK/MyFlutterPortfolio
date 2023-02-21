@@ -59,4 +59,19 @@ final MyDrawerTheme myDrawerLightTheme = MyDrawerTheme(
       padding: const MaterialStatePropertyAll(EdgeInsets.all(8)),
     )));
 
+final BottomNavigationBarThemeData myBottomNavigationBarThemeData =
+    BottomNavigationBarThemeData(
+  elevation: 0,
+  backgroundColor: const Color(0xFF1c2229),
+  unselectedItemColor: Colors.white,
+  selectedItemColor: const Color.fromARGB(216, 48, 241, 93),
+  unselectedLabelStyle: GoogleFonts.openSans(
+    color: Colors.white,
+    textStyle: const TextStyle(overflow: TextOverflow.ellipsis),
+  ),
+  showUnselectedLabels: false,
+  enableFeedback: true,
+  unselectedIconTheme: const IconThemeData(size: 24),
+  selectedIconTheme: const IconThemeData(size: 28),
+);
 // final MyDrawerTheme myDrawerDarkTheme = MyDrawerTheme(backgroundColor: const Color(value), buttonSelectedIndicatorColor: buttonSelectedIndicatorColor, buttonTheme: buttonTheme)
