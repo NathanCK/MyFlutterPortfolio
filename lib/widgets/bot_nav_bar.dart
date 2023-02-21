@@ -42,7 +42,16 @@ class _BotNavBarState extends State<BotNavBar> {
   List<BottomNavigationBarItem> _getBotNavBarItemList() {
     return NavItem.values
         .map((e) => BottomNavigationBarItem(
-            label: e.label, icon: e.icon, activeIcon: e.selectedIcon))
+            tooltip: e.label,
+            label: e.label,
+            icon: e.icon,
+            activeIcon: Icon(
+              e.selectedIcon.icon,
+              shadows: const [
+                Shadow(
+                    color: Color.fromARGB(255, 112, 255, 146), blurRadius: 20),
+              ],
+            )))
         .toList();
   }
 
