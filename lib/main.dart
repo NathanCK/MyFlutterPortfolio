@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
           routeInformationParser: BeamerParser(),
           theme: ThemeData.light().copyWith(
               bottomNavigationBarTheme: myBottomNavigationBarThemeData,
+              navigationRailTheme: myNavigationRailThemeData,
               extensions: [
                 myDrawerLightTheme,
               ]),
