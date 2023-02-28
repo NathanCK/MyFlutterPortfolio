@@ -9,8 +9,6 @@ abstract class MyHomePageState extends Equatable {
 
 class MyHomePageInitial extends MyHomePageState {}
 
-class MyHomePageInitializationStarted extends MyHomePageState {}
-
-class MyHomePageInitializationEnded extends MyHomePageState {}
-
 class HomePageWelcomeGreetingSuccess extends MyHomePageState {}
+
+class HomePageWelcomeGreetingMoveSuccess extends MyHomePageState {}

@@ -8,3 +8,5 @@ abstract class MyHomePageEvent extends Equatable {
 }
 
 class HomePageWelcomeGreetingEnded extends MyHomePageEvent {}
+
+class HomePageWelcomeGreetingMoved extends MyHomePageEvent {}
