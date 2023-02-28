@@ -57,10 +57,11 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
               }
 
               if (state is MyHomePageInitial ||
-                  state is HomePageWelcomeGreetingSuccess) {
+                  state is HomePageWelcomeGreetingSuccess ||
+                  state is HomePageWelcomeGreetingMoveSuccess) {
                 return Stack(children: [
                   AnimatedPositioned(
-                    curve: Curves.decelerate,
+                    curve: Curves.fastOutSlowIn,
                     duration: const Duration(seconds: 1),
                     left: left,
                     top: top,
@@ -84,13 +85,18 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                         ),
                       ],
                     ),
+                    onEnd: () => context
+                        .read<MyHomePageBloc>()
+                        .add(HomePageWelcomeGreetingMoved()),
                   ),
                   Positioned(
                     top: top + welcomeGreetingTextSize.height,
                     left: left,
                     child: AnimatedOpacity(
-                        opacity: state is MyHomePageInitial ? 0.0 : 1.0,
-                        duration: const Duration(seconds: 2),
+                        opacity: state is HomePageWelcomeGreetingMoveSuccess
+                            ? 1.0
+                            : 0.0,
+                        duration: const Duration(seconds: 1),
                         child: SizedBox(
                           width: width - 100,
                           height: height - 100,
