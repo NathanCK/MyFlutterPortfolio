@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_website/beam_locations/app_path.dart';
 
 enum NavItem {
-  home('Home', AppPath.home, Icon(Icons.home), Icon(Icons.home_outlined)),
-  experience('Experience', AppPath.experience, Icon(Icons.book),
+  home('Home.dart', AppPath.home, Icon(Icons.home), Icon(Icons.home_outlined)),
+  experience('Experience.dart', AppPath.experience, Icon(Icons.book),
       Icon(Icons.book_outlined)),
-  about('About', AppPath.about, Icon(Icons.info), Icon(Icons.info_outline));
+  about(
+      'About.dart', AppPath.about, Icon(Icons.info), Icon(Icons.info_outline));
 
   const NavItem(this.label, this.url, this.icon, this.selectedIcon);
   final String url;
