@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_flutter_website/bloc/my_home_page_bloc.dart';
+import 'package:my_flutter_website/enum/screen_size_type.dart';
 import 'package:my_flutter_website/utils/text_utils.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -39,88 +40,262 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
         ));
 
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (buildContext, boxConstraints) {
-          final width = boxConstraints.maxWidth;
-          final height = boxConstraints.maxHeight;
+      body: Padding(
+        padding: const EdgeInsets.all(50),
+        child: LayoutBuilder(
+          builder: (buildContext, boxConstraints) {
+            final width = boxConstraints.maxWidth;
+            final height = boxConstraints.maxHeight;
 
-          return BlocBuilder<MyHomePageBloc, MyHomePageState>(
-            builder: (context, state) {
-              if (state is MyHomePageInitial) {
-                top = height / 2;
-                left = (width / 2) - welcomeGreetingTextSize.width / 2;
-              }
+            final screenSizeType =
+                _getScreenSizeType(screenHeight: height, screenWidth: width);
 
-              if (state is HomePageWelcomeGreetingSuccess) {
-                top = 50;
-                left = 50;
-              }
+            return BlocBuilder<MyHomePageBloc, MyHomePageState>(
+              builder: (context, state) {
+                if (screenSizeType == ScreenSizeType.big) {
+                  if (state is MyHomePageInitial) {
+                    // center the greeting
+                    top = height / 2;
+                    left = (width / 2) - welcomeGreetingTextSize.width / 2;
+                  }
 
-              if (state is MyHomePageInitial ||
-                  state is HomePageWelcomeGreetingSuccess ||
-                  state is HomePageWelcomeGreetingMoveSuccess) {
-                return Stack(children: [
-                  AnimatedPositioned(
-                    curve: Curves.fastOutSlowIn,
-                    duration: const Duration(seconds: 1),
-                    left: left,
-                    top: top,
-                    child: AnimatedTextKit(
-                      isRepeatingAnimation: false,
-                      pause: Duration.zero,
-                      onFinished: () {
-                        context
-                            .read<MyHomePageBloc>()
-                            .add(HomePageWelcomeGreetingEnded());
-                      },
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          'Hello world !',
-                          textStyle: const TextStyle(
-                            fontSize: 32.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          speed: const Duration(milliseconds: 200),
-                          curve: Curves.bounceInOut,
+                  if (state is HomePageWelcomeGreetingSuccess ||
+                      state is HomePageWelcomeGreetingMoveSuccess) {
+                    top = height / 2 - 100;
+                    left = 0;
+                  }
+
+                  if (state is MyHomePageInitial ||
+                      state is HomePageWelcomeGreetingSuccess ||
+                      state is HomePageWelcomeGreetingMoveSuccess) {
+                    return Stack(children: [
+                      AnimatedPositioned(
+                        curve: Curves.fastOutSlowIn,
+                        duration: (state is MyHomePageInitial ||
+                                state is HomePageWelcomeGreetingSuccess)
+                            ? const Duration(seconds: 1)
+                            : Duration.zero,
+                        left: left,
+                        top: top,
+                        child: AnimatedTextKit(
+                          isRepeatingAnimation: false,
+                          pause: Duration.zero,
+                          onFinished: () {
+                            context
+                                .read<MyHomePageBloc>()
+                                .add(HomePageWelcomeGreetingEnded());
+                          },
+                          animatedTexts: [
+                            TypewriterAnimatedText(
+                              'Hello world !',
+                              textStyle: const TextStyle(
+                                fontSize: 32.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              speed: const Duration(milliseconds: 200),
+                              curve: Curves.bounceInOut,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    onEnd: () => context
-                        .read<MyHomePageBloc>()
-                        .add(HomePageWelcomeGreetingMoved()),
-                  ),
-                  Positioned(
-                    top: top + welcomeGreetingTextSize.height,
-                    left: left,
-                    child: AnimatedOpacity(
+                        onEnd: () {
+                          if (state is HomePageWelcomeGreetingSuccess) {
+                            context
+                                .read<MyHomePageBloc>()
+                                .add(HomePageWelcomeGreetingMoved());
+                          }
+                        },
+                      ),
+                      Opacity(
                         opacity: state is HomePageWelcomeGreetingMoveSuccess
                             ? 1.0
                             : 0.0,
-                        duration: const Duration(seconds: 1),
-                        child: SizedBox(
-                          width: width - 100,
-                          height: height - 100,
-                          child: const AutoSizeText(
-                            'My name is Kin Chan, but you can call me Nathan.\n'
-                            'I am a Software Engineer, who develops both frontend and backend application.',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                // crossAxisAlignment: CrossAxisAlignment.start,
+                                // mainAxisAlignment:
+                                //     MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    height:
+                                        welcomeGreetingTextSize.height + top,
+                                  ),
+                                  AnimatedOpacity(
+                                    opacity: state
+                                            is HomePageWelcomeGreetingMoveSuccess
+                                        ? 1.0
+                                        : 0.0,
+                                    duration: const Duration(seconds: 1),
+                                    child: SizedBox(
+                                      width: (width / 2),
+                                      height: (height -
+                                              welcomeGreetingTextSize.height) /
+                                          4,
+                                      child: const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 16.0),
+                                        child: AutoSizeText(
+                                          'My name is Kin Chan, but you can call me Nathan.\n'
+                                          'I am a Software Engineer, who develops both frontend and backend application.',
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          maxLines: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                            iconSize: 32,
+                                            onPressed: () {},
+                                            icon: Image.asset(
+                                              'assets/icons/GitHub_icon.png',
+                                            )),
+                                        IconButton(
+                                            iconSize: 32,
+                                            onPressed: () {},
+                                            icon: Image.asset(
+                                              'assets/icons/LinkedIn_icon.png',
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: height * 0.2,
+                                  ),
+                                ],
+                              ),
                             ),
-                            maxLines: 15,
-                          ),
-                        )),
-                  )
-                ]);
-              }
+                            Expanded(
+                              child: AnimatedOpacity(
+                                opacity:
+                                    state is HomePageWelcomeGreetingMoveSuccess
+                                        ? 1.0
+                                        : 0.0,
+                                duration: const Duration(seconds: 1),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/gumwall.jpeg',
+                                      height: height * 0.8,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ]);
+                  }
+                }
 
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          );
-        },
+                // if (screenSizeType == ScreenSizeType.small ||
+                //     screenSizeType == ScreenSizeType.medium) {
+                //   if (state is MyHomePageInitial) {
+                //     top = height / 2;
+                //     left = (width / 2) - welcomeGreetingTextSize.width / 2;
+                //   }
+
+                //   if (state is HomePageWelcomeGreetingSuccess) {
+                //     top = 0;
+                //     left = 0;
+                //   }
+
+                //   if (state is MyHomePageInitial ||
+                //       state is HomePageWelcomeGreetingSuccess ||
+                //       state is HomePageWelcomeGreetingMoveSuccess) {
+                //     return Stack(children: [
+                //       AnimatedPositioned(
+                //         curve: Curves.fastOutSlowIn,
+                //         duration: const Duration(seconds: 3),
+                //         left: left,
+                //         top: top,
+                //         child: AnimatedTextKit(
+                //           isRepeatingAnimation: false,
+                //           pause: Duration.zero,
+                //           onFinished: () {
+                //             context
+                //                 .read<MyHomePageBloc>()
+                //                 .add(HomePageWelcomeGreetingEnded());
+                //           },
+                //           animatedTexts: [
+                //             TypewriterAnimatedText(
+                //               'Hello world !',
+                //               textStyle: const TextStyle(
+                //                 fontSize: 32.0,
+                //                 fontWeight: FontWeight.bold,
+                //               ),
+                //               speed: const Duration(milliseconds: 200),
+                //               curve: Curves.bounceInOut,
+                //             ),
+                //           ],
+                //         ),
+                //         onEnd: () {
+                //           if (state is HomePageWelcomeGreetingSuccess) {
+                //             context
+                //                 .read<MyHomePageBloc>()
+                //                 .add(HomePageWelcomeGreetingMoved());
+                //           }
+                //         },
+                //       ),
+                //       Positioned(
+                //         top: top + welcomeGreetingTextSize.height,
+                //         left: left,
+                //         child: AnimatedOpacity(
+                //             opacity: state is HomePageWelcomeGreetingMoveSuccess
+                //                 ? 1.0
+                //                 : 0.0,
+                //             duration: const Duration(seconds: 1),
+                //             child: SizedBox(
+                //               width: width,
+                //               height: height,
+                //               child: const AutoSizeText(
+                //                 'My name is Kin Chan, but you can call me Nathan.\n'
+                //                 'I am a Software Engineer, who develops both frontend and backend application.',
+                //                 style: TextStyle(
+                //                   fontSize: 18.0,
+                //                   fontWeight: FontWeight.bold,
+                //                 ),
+                //                 maxLines: 15,
+                //               ),
+                //             )),
+                //       )
+                //     ]);
+                //   }
+                // }
+
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
+  }
+
+  ScreenSizeType _getScreenSizeType(
+      {required double screenHeight, required double screenWidth}) {
+    if (screenHeight <= 400 || screenWidth <= 375) {
+      return ScreenSizeType.small;
+    }
+
+    if (screenWidth >= 820) {
+      return ScreenSizeType.big;
+    }
+
+    return ScreenSizeType.medium;
   }
 }
