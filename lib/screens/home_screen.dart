@@ -3,8 +3,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_flutter_website/bloc/my_home_page_bloc.dart';
+import 'package:my_flutter_website/enum/external_profile_type.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
 import 'package:my_flutter_website/utils/text_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -28,6 +30,8 @@ class _MyHomeScreen extends StatefulWidget {
 }
 
 class _MyHomeScreenState extends State<_MyHomeScreen> {
+  final List<ExternalProfileType> _externalTypeList =
+      ExternalProfileType.values;
   late double top;
   late double left;
 
@@ -153,20 +157,23 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                                           MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
-                                      children: [
-                                        IconButton(
+                                      children: List.generate(
+                                          _externalTypeList.length, (index) {
+                                        final externalType =
+                                            _externalTypeList[index];
+                                        return IconButton(
                                             iconSize: 32,
-                                            onPressed: () {},
+                                            onPressed: () async {
+                                              final uri =
+                                                  Uri.parse(externalType.url);
+                                              if (!await launchUrl(uri)) {
+                                                throw Exception(
+                                                    'Could not launch $uri');
+                                              }
+                                            },
                                             icon: Image.asset(
-                                              'assets/icons/GitHub_icon.png',
-                                            )),
-                                        IconButton(
-                                            iconSize: 32,
-                                            onPressed: () {},
-                                            icon: Image.asset(
-                                              'assets/icons/LinkedIn_icon.png',
-                                            ))
-                                      ],
+                                                externalType.iconPath));
+                                      }),
                                     ),
                                   ),
                                   SizedBox(
