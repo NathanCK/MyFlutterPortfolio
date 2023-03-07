@@ -30,8 +30,6 @@ class _MyHomeScreen extends StatefulWidget {
 }
 
 class _MyHomeScreenState extends State<_MyHomeScreen> {
-  final List<ExternalProfileType> _externalTypeList =
-      ExternalProfileType.values;
   late double top;
   late double left;
 
@@ -57,154 +55,12 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
             return BlocBuilder<MyHomePageBloc, MyHomePageState>(
               builder: (context, state) {
                 if (screenSizeType == ScreenSizeType.big) {
-                  if (state is MyHomePageInitial) {
-                    // center the greeting
-                    top = height / 2;
-                    left = (width / 2) - welcomeGreetingTextSize.width / 2;
-                  }
-
-                  if (state is HomePageWelcomeGreetingSuccess ||
-                      state is HomePageWelcomeGreetingMoveSuccess) {
-                    top = height / 2 - 100;
-                    left = 0;
-                  }
-
-                  if (state is MyHomePageInitial ||
-                      state is HomePageWelcomeGreetingSuccess ||
-                      state is HomePageWelcomeGreetingMoveSuccess) {
-                    return Stack(children: [
-                      AnimatedPositioned(
-                        curve: Curves.fastOutSlowIn,
-                        duration: (state is MyHomePageInitial ||
-                                state is HomePageWelcomeGreetingSuccess)
-                            ? const Duration(seconds: 1)
-                            : Duration.zero,
-                        left: left,
-                        top: top,
-                        child: AnimatedTextKit(
-                          isRepeatingAnimation: false,
-                          pause: Duration.zero,
-                          onFinished: () {
-                            context
-                                .read<MyHomePageBloc>()
-                                .add(HomePageWelcomeGreetingEnded());
-                          },
-                          animatedTexts: [
-                            TypewriterAnimatedText(
-                              'Hello world !',
-                              textStyle: const TextStyle(
-                                fontSize: 32.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              speed: const Duration(milliseconds: 200),
-                              curve: Curves.bounceInOut,
-                            ),
-                          ],
-                        ),
-                        onEnd: () {
-                          if (state is HomePageWelcomeGreetingSuccess) {
-                            context
-                                .read<MyHomePageBloc>()
-                                .add(HomePageWelcomeGreetingMoved());
-                          }
-                        },
-                      ),
-                      Opacity(
-                        opacity: state is HomePageWelcomeGreetingMoveSuccess
-                            ? 1.0
-                            : 0.0,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                // crossAxisAlignment: CrossAxisAlignment.start,
-                                // mainAxisAlignment:
-                                //     MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    height:
-                                        welcomeGreetingTextSize.height + top,
-                                  ),
-                                  AnimatedOpacity(
-                                    opacity: state
-                                            is HomePageWelcomeGreetingMoveSuccess
-                                        ? 1.0
-                                        : 0.0,
-                                    duration: const Duration(seconds: 1),
-                                    child: SizedBox(
-                                      width: (width / 2),
-                                      height: (height -
-                                              welcomeGreetingTextSize.height) /
-                                          4,
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 16.0),
-                                        child: AutoSizeText(
-                                          'My name is Kin Chan, but you can call me Nathan.\n'
-                                          'I am a Software Engineer, who develops both frontend and backend application.',
-                                          style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          maxLines: 15,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: List.generate(
-                                          _externalTypeList.length, (index) {
-                                        final externalType =
-                                            _externalTypeList[index];
-                                        return IconButton(
-                                            iconSize: 32,
-                                            onPressed: () async {
-                                              final uri =
-                                                  Uri.parse(externalType.url);
-                                              if (!await launchUrl(uri)) {
-                                                throw Exception(
-                                                    'Could not launch $uri');
-                                              }
-                                            },
-                                            icon: Image.asset(
-                                                externalType.iconPath));
-                                      }),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.2,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: AnimatedOpacity(
-                                opacity:
-                                    state is HomePageWelcomeGreetingMoveSuccess
-                                        ? 1.0
-                                        : 0.0,
-                                duration: const Duration(seconds: 1),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/gumwall.jpeg',
-                                      height: height * 0.8,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ]);
-                  }
+                  return _LargeScreenContent(
+                    height: height,
+                    width: width,
+                    state: state,
+                    welcomeGreetingTextSize: welcomeGreetingTextSize,
+                  );
                 }
 
                 // if (screenSizeType == ScreenSizeType.small ||
@@ -220,8 +76,7 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                 //   }
 
                 //   if (state is MyHomePageInitial ||
-                //       state is HomePageWelcomeGreetingSuccess ||
-                //       state is HomePageWelcomeGreetingMoveSuccess) {
+                //       state is HomePageWelcomeGreetingSuccess) {
                 //     return Stack(children: [
                 //       AnimatedPositioned(
                 //         curve: Curves.fastOutSlowIn,
@@ -256,34 +111,23 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                 //           }
                 //         },
                 //       ),
-                //       Positioned(
-                //         top: top + welcomeGreetingTextSize.height,
-                //         left: left,
-                //         child: AnimatedOpacity(
-                //             opacity: state is HomePageWelcomeGreetingMoveSuccess
-                //                 ? 1.0
-                //                 : 0.0,
-                //             duration: const Duration(seconds: 1),
-                //             child: SizedBox(
-                //               width: width,
-                //               height: height,
-                //               child: const AutoSizeText(
-                //                 'My name is Kin Chan, but you can call me Nathan.\n'
-                //                 'I am a Software Engineer, who develops both frontend and backend application.',
-                //                 style: TextStyle(
-                //                   fontSize: 18.0,
-                //                   fontWeight: FontWeight.bold,
-                //                 ),
-                //                 maxLines: 15,
-                //               ),
-                //             )),
-                //       )
                 //     ]);
+                //   }
+
+                //   if (state is HomePageWelcomeGreetingSuccess) {
+                //     return ListView(
+                //       children: [
+
+                //       ],
+                //     )
                 //   }
                 // }
 
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return _LargeScreenContent(
+                  height: height,
+                  width: width,
+                  state: state,
+                  welcomeGreetingTextSize: welcomeGreetingTextSize,
                 );
               },
             );
@@ -304,5 +148,184 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
     }
 
     return ScreenSizeType.medium;
+  }
+}
+
+class _LargeScreenContent extends StatelessWidget {
+  final MyHomePageState state;
+  final double height;
+  final double width;
+  final Size welcomeGreetingTextSize;
+
+  const _LargeScreenContent({
+    super.key,
+    required this.state,
+    required this.height,
+    required this.width,
+    required this.welcomeGreetingTextSize,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    double top;
+    double left;
+    if (state is MyHomePageInitial) {
+      // center the greeting
+      top = height / 2;
+      left = (width / 2) - welcomeGreetingTextSize.width / 2;
+    } else {
+      top = height / 2 - 100;
+      left = 0;
+    }
+
+    return Stack(children: [
+      AnimatedPositioned(
+        curve: Curves.fastOutSlowIn,
+        duration: (state is MyHomePageInitial ||
+                state is HomePageWelcomeGreetingSuccess)
+            ? const Duration(seconds: 1)
+            : Duration.zero,
+        left: left,
+        top: top,
+        child: const _AnimatedGreetingSentenceWidget(),
+        onEnd: () {
+          if (state is HomePageWelcomeGreetingSuccess) {
+            context.read<MyHomePageBloc>().add(HomePageWelcomeGreetingMoved());
+          }
+        },
+      ),
+      Opacity(
+        opacity: state is HomePageWelcomeGreetingMoveSuccess ? 1.0 : 0.0,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: welcomeGreetingTextSize.height + top,
+                  ),
+                  AnimatedOpacity(
+                    opacity:
+                        state is HomePageWelcomeGreetingMoveSuccess ? 1.0 : 0.0,
+                    duration: const Duration(seconds: 1),
+                    child: SizedBox(
+                      width: (width / 2),
+                      height: (height - welcomeGreetingTextSize.height) / 4,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        child: _IntroductionWidget(),
+                      ),
+                    ),
+                  ),
+                  const _ExternalLinkWidget(),
+                  SizedBox(
+                    height: height * 0.2,
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: AnimatedOpacity(
+                opacity:
+                    state is HomePageWelcomeGreetingMoveSuccess ? 1.0 : 0.0,
+                duration: const Duration(seconds: 1),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    _MyPhotoWidget(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      )
+    ]);
+  }
+}
+
+class _AnimatedGreetingSentenceWidget extends StatelessWidget {
+  const _AnimatedGreetingSentenceWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedTextKit(
+      isRepeatingAnimation: false,
+      pause: Duration.zero,
+      onFinished: () {
+        context.read<MyHomePageBloc>().add(HomePageWelcomeGreetingEnded());
+      },
+      animatedTexts: [
+        TypewriterAnimatedText(
+          'Hello world !',
+          textStyle: const TextStyle(
+            fontSize: 32.0,
+            fontWeight: FontWeight.bold,
+          ),
+          speed: const Duration(milliseconds: 200),
+          curve: Curves.bounceInOut,
+        ),
+      ],
+    );
+  }
+}
+
+class _IntroductionWidget extends StatelessWidget {
+  const _IntroductionWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return const AutoSizeText(
+      'My name is Kin Chan, but you can call me Nathan.\n'
+      'I am a Software Engineer, who develops both frontend and backend application.',
+      style: TextStyle(
+        fontSize: 18.0,
+        fontWeight: FontWeight.bold,
+      ),
+      maxLines: 15,
+    );
+  }
+}
+
+class _ExternalLinkWidget extends StatelessWidget {
+  final List<ExternalProfileType> _externalTypeList =
+      ExternalProfileType.values;
+
+  const _ExternalLinkWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: List.generate(_externalTypeList.length, (index) {
+          final externalType = _externalTypeList[index];
+          return IconButton(
+              iconSize: 32,
+              onPressed: () async {
+                final uri = Uri.parse(externalType.url);
+                if (!await launchUrl(uri)) {
+                  throw Exception('Could not launch $uri');
+                }
+              },
+              icon: Image.asset(externalType.iconPath));
+        }),
+      ),
+    );
+  }
+}
+
+class _MyPhotoWidget extends StatelessWidget {
+  const _MyPhotoWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+
+    return Image.asset(
+      'assets/images/gumwall.jpeg',
+      height: height * 0.8,
+    );
   }
 }
