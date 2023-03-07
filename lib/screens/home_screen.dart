@@ -119,24 +119,37 @@ class _SmallScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-      children: [
-        SizedBox(
-          height: welcomeGreetingTextSize.height + verticalPadding,
-          child: const Text(
-            'Hello world !',
-            style: TextStyle(
-              fontSize: 32.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        const _MyPhotoWidget(),
-        const _IntroductionWidget(),
-        const _ExternalLinkWidget(),
-      ],
-    );
+    return TweenAnimationBuilder(
+        tween: Tween<double>(begin: 0.0, end: 1.0),
+        curve: Curves.ease,
+        duration: const Duration(seconds: 1),
+        builder: (BuildContext context, double opacity, Widget? child) {
+          return ListView(
+            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+            children: [
+              SizedBox(
+                height: welcomeGreetingTextSize.height + verticalPadding,
+                child: const Text(
+                  'Hello world !',
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Opacity(
+                opacity: opacity,
+                child: Column(
+                  children: const [
+                    _MyPhotoWidget(),
+                    _IntroductionWidget(),
+                    _ExternalLinkWidget(),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
   }
 }
 
@@ -160,54 +173,75 @@ class _LargeScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final top = (height / 2) - verticalPadding - 100;
 
-    return Padding(
-      padding: padding,
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
+    return TweenAnimationBuilder(
+        tween: Tween<double>(begin: 0.0, end: 1.0),
+        curve: Curves.ease,
+        duration: const Duration(seconds: 1),
+        builder: (BuildContext context, double opacity, Widget? child) {
+          return Padding(
+            padding: padding,
+            child: Row(
               children: [
-                SizedBox(
-                  height: welcomeGreetingTextSize.height + top,
-                  child: const Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      'Hello world !',
-                      style: TextStyle(
-                        fontSize: 32.0,
-                        fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: welcomeGreetingTextSize.height + top,
+                        child: const Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            'Hello world !',
+                            style: TextStyle(
+                              fontSize: 32.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
+                      Opacity(
+                        opacity: opacity,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: (width / 2),
+                              height:
+                                  (height - welcomeGreetingTextSize.height) / 4,
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16.0),
+                                child: _IntroductionWidget(),
+                              ),
+                            ),
+                            const _ExternalLinkWidget(),
+                            SizedBox(
+                              height: height * 0.2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Opacity(
+                    opacity: opacity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        _MyPhotoWidget(),
+                      ],
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: (width / 2),
-                  height: (height - welcomeGreetingTextSize.height) / 4,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: _IntroductionWidget(),
-                  ),
-                ),
-                const _ExternalLinkWidget(),
-                SizedBox(
-                  height: height * 0.2,
-                ),
               ],
             ),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                _MyPhotoWidget(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }
+
+// class _GreetingToRealContentTransitWidget extends StatelessWidget {
+
+// }
 
 class _AnimatedGreetingSentenceWidget extends StatelessWidget {
   final bool shouldMove;
