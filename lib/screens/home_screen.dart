@@ -63,7 +63,8 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                   screenSizeType: screenSizeType,
                   height: height,
                   width: width,
-                  state: state,
+                  shouldMove: state is HomePageWelcomeGreetingSuccess,
+                  shouldShow: state is MyHomePageInitial,
                   welcomeGreetingTextSize: welcomeGreetingTextSize,
                   padding: screenPadding,
                 );
@@ -73,7 +74,6 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                 return _LargeScreenContent(
                   height: height,
                   width: width,
-                  state: state,
                   welcomeGreetingTextSize: welcomeGreetingTextSize,
                   padding: screenPadding,
                 );
@@ -141,7 +141,6 @@ class _SmallScreenContent extends StatelessWidget {
 }
 
 class _LargeScreenContent extends StatelessWidget {
-  final MyHomePageState state;
   final double height;
   final double width;
   final Size welcomeGreetingTextSize;
@@ -150,7 +149,6 @@ class _LargeScreenContent extends StatelessWidget {
   final double verticalPadding;
 
   _LargeScreenContent({
-    required this.state,
     required this.height,
     required this.width,
     required this.welcomeGreetingTextSize,
@@ -212,7 +210,8 @@ class _LargeScreenContent extends StatelessWidget {
 }
 
 class _AnimatedGreetingSentenceWidget extends StatelessWidget {
-  final MyHomePageState state;
+  final bool shouldMove;
+  final bool shouldShow;
   final double height;
   final double width;
   final EdgeInsetsGeometry padding;
@@ -220,19 +219,20 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
   final ScreenSizeType screenSizeType;
 
   const _AnimatedGreetingSentenceWidget({
-    required this.state,
     required this.height,
     required this.width,
     required this.padding,
     required this.welcomeGreetingTextSize,
     required this.screenSizeType,
+    required this.shouldMove,
+    required this.shouldShow,
   });
 
   @override
   Widget build(BuildContext context) {
     double top;
     double left;
-    if (state is MyHomePageInitial) {
+    if (shouldShow) {
       // center the greeting
       top = (height / 2) - (padding.vertical / 2);
       left = ((width / 2) - (padding.horizontal / 2)) -
@@ -276,7 +276,7 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
             ],
           ),
           onEnd: () {
-            if (state is HomePageWelcomeGreetingSuccess) {
+            if (shouldMove) {
               context
                   .read<MyHomePageBloc>()
                   .add(HomePageWelcomeGreetingMoved());
