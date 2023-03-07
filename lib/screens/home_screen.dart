@@ -50,31 +50,38 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
           final screenSizeType =
               _getScreenSizeType(screenHeight: height, screenWidth: width);
 
+          EdgeInsetsGeometry screenPadding =
+              screenSizeType == ScreenSizeType.big
+                  ? const EdgeInsets.all(50)
+                  : const EdgeInsets.symmetric(horizontal: 20, vertical: 50);
+
           return BlocBuilder<MyHomePageBloc, MyHomePageState>(
             builder: (context, state) {
+              if (state is MyHomePageInitial ||
+                  state is HomePageWelcomeGreetingSuccess) {
+                return _AnimatedGreetingSentenceWidget(
+                  screenSizeType: screenSizeType,
+                  height: height,
+                  width: width,
+                  state: state,
+                  welcomeGreetingTextSize: welcomeGreetingTextSize,
+                  padding: screenPadding,
+                );
+              }
+
               if (screenSizeType == ScreenSizeType.big) {
                 return _LargeScreenContent(
                   height: height,
                   width: width,
                   state: state,
                   welcomeGreetingTextSize: welcomeGreetingTextSize,
+                  padding: screenPadding,
                 );
               }
 
-              if (screenSizeType == ScreenSizeType.small ||
-                  screenSizeType == ScreenSizeType.medium) {
-                return _SmallScreenContent(
-                  height: height,
-                  width: width,
-                  state: state,
-                  welcomeGreetingTextSize: welcomeGreetingTextSize,
-                );
-              }
-
+              /// should be small or medium screens.
               return _SmallScreenContent(
-                height: height,
-                width: width,
-                state: state,
+                padding: screenPadding,
                 welcomeGreetingTextSize: welcomeGreetingTextSize,
               );
             },
@@ -99,38 +106,153 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
 }
 
 class _SmallScreenContent extends StatelessWidget {
-  final double _screenHPadding = 20;
-  final double _screenVPadding = 50;
+  final Size welcomeGreetingTextSize;
+  final EdgeInsetsGeometry padding;
+  final double horizontalPadding;
+  final double verticalPadding;
+
+  _SmallScreenContent({
+    required this.welcomeGreetingTextSize,
+    required this.padding,
+  })  : horizontalPadding = padding.horizontal / 2,
+        verticalPadding = padding.vertical / 2;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+      children: [
+        SizedBox(
+          height: welcomeGreetingTextSize.height + verticalPadding,
+          child: const Text(
+            'Hello world !',
+            style: TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const _MyPhotoWidget(),
+        const _IntroductionWidget(),
+        const _ExternalLinkWidget(),
+      ],
+    );
+  }
+}
+
+class _LargeScreenContent extends StatelessWidget {
   final MyHomePageState state;
   final double height;
   final double width;
   final Size welcomeGreetingTextSize;
+  final EdgeInsetsGeometry padding;
+  final double horizontalPadding;
+  final double verticalPadding;
 
-  const _SmallScreenContent(
-      {super.key,
-      required this.state,
-      required this.height,
-      required this.width,
-      required this.welcomeGreetingTextSize});
+  _LargeScreenContent({
+    required this.state,
+    required this.height,
+    required this.width,
+    required this.welcomeGreetingTextSize,
+    required this.padding,
+  })  : horizontalPadding = padding.horizontal / 2,
+        verticalPadding = padding.vertical / 2;
+
+  @override
+  Widget build(BuildContext context) {
+    final top = (height / 2) - verticalPadding - 100;
+
+    return Padding(
+      padding: padding,
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: welcomeGreetingTextSize.height + top,
+                  child: const Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      'Hello world !',
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: (width / 2),
+                  height: (height - welcomeGreetingTextSize.height) / 4,
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: _IntroductionWidget(),
+                  ),
+                ),
+                const _ExternalLinkWidget(),
+                SizedBox(
+                  height: height * 0.2,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                _MyPhotoWidget(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AnimatedGreetingSentenceWidget extends StatelessWidget {
+  final MyHomePageState state;
+  final double height;
+  final double width;
+  final EdgeInsetsGeometry padding;
+  final Size welcomeGreetingTextSize;
+  final ScreenSizeType screenSizeType;
+
+  const _AnimatedGreetingSentenceWidget({
+    required this.state,
+    required this.height,
+    required this.width,
+    required this.padding,
+    required this.welcomeGreetingTextSize,
+    required this.screenSizeType,
+  });
 
   @override
   Widget build(BuildContext context) {
     double top;
     double left;
     if (state is MyHomePageInitial) {
-      top = (height / 2) - _screenVPadding;
-      left =
-          ((width / 2) - _screenHPadding) - welcomeGreetingTextSize.width / 2;
+      // center the greeting
+      top = (height / 2) - (padding.vertical / 2);
+      left = ((width / 2) - (padding.horizontal / 2)) -
+          welcomeGreetingTextSize.width / 2;
+    } else if (screenSizeType == ScreenSizeType.big) {
+      // center left for big screen
+      top = (height / 2) - (padding.vertical / 2) - 100;
+      left = 0;
     } else {
-      top = _screenVPadding;
-      left = _screenHPadding;
+      // top left for small screen
+      top = 0;
+      left = 0;
     }
 
-    if (state is MyHomePageInitial || state is HomePageWelcomeGreetingSuccess) {
-      return Stack(children: [
+    return Padding(
+      padding: padding,
+      child: Stack(children: [
         AnimatedPositioned(
           curve: Curves.fastOutSlowIn,
-          duration: const Duration(seconds: 3),
+          duration: const Duration(seconds: 1),
           left: left,
           top: top,
           child: AnimatedTextKit(
@@ -161,166 +283,7 @@ class _SmallScreenContent extends StatelessWidget {
             }
           },
         ),
-      ]);
-    }
-
-    return ListView(
-      padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-      children: [
-        SizedBox(
-          height: welcomeGreetingTextSize.height + top,
-          child: const Text(
-            'Hello world !',
-            style: TextStyle(
-              fontSize: 32.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        const _MyPhotoWidget(),
-        const _IntroductionWidget(),
-        const _ExternalLinkWidget(),
-      ],
-    );
-  }
-}
-
-class _LargeScreenContent extends StatelessWidget {
-  final double _screenPadding = 50.0;
-  final MyHomePageState state;
-  final double height;
-  final double width;
-  final Size welcomeGreetingTextSize;
-
-  const _LargeScreenContent({
-    super.key,
-    required this.state,
-    required this.height,
-    required this.width,
-    required this.welcomeGreetingTextSize,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    double top;
-    double left;
-    if (state is MyHomePageInitial) {
-      // center the greeting
-      top = (height / 2) - _screenPadding;
-      left = ((width / 2) - _screenPadding) - welcomeGreetingTextSize.width / 2;
-    } else {
-      top = (height / 2) - _screenPadding - 100;
-      left = 0;
-    }
-
-    final topLeftGreetingWidget = state is HomePageWelcomeGreetingMoveSuccess
-        ? Positioned(
-            left: left,
-            top: top,
-            child: const Text(
-              'Hello world !',
-              style: TextStyle(
-                fontSize: 32.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )
-        : AnimatedPositioned(
-            curve: Curves.fastOutSlowIn,
-            duration: (state is MyHomePageInitial ||
-                    state is HomePageWelcomeGreetingSuccess)
-                ? const Duration(seconds: 1)
-                : Duration.zero,
-            left: left,
-            top: top,
-            child: const _AnimatedGreetingSentenceWidget(),
-            onEnd: () {
-              if (state is HomePageWelcomeGreetingSuccess) {
-                context
-                    .read<MyHomePageBloc>()
-                    .add(HomePageWelcomeGreetingMoved());
-              }
-            },
-          );
-
-    return Padding(
-      padding: EdgeInsets.all(_screenPadding),
-      child: Stack(children: [
-        topLeftGreetingWidget,
-        Opacity(
-          opacity: state is HomePageWelcomeGreetingMoveSuccess ? 1.0 : 0.0,
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: welcomeGreetingTextSize.height + top,
-                    ),
-                    AnimatedOpacity(
-                      opacity: state is HomePageWelcomeGreetingMoveSuccess
-                          ? 1.0
-                          : 0.0,
-                      duration: const Duration(seconds: 1),
-                      child: SizedBox(
-                        width: (width / 2),
-                        height: (height - welcomeGreetingTextSize.height) / 4,
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 16.0),
-                          child: _IntroductionWidget(),
-                        ),
-                      ),
-                    ),
-                    const _ExternalLinkWidget(),
-                    SizedBox(
-                      height: height * 0.2,
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: AnimatedOpacity(
-                  opacity:
-                      state is HomePageWelcomeGreetingMoveSuccess ? 1.0 : 0.0,
-                  duration: const Duration(seconds: 1),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      _MyPhotoWidget(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
       ]),
-    );
-  }
-}
-
-class _AnimatedGreetingSentenceWidget extends StatelessWidget {
-  const _AnimatedGreetingSentenceWidget();
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedTextKit(
-      isRepeatingAnimation: false,
-      pause: Duration.zero,
-      onFinished: () {
-        context.read<MyHomePageBloc>().add(HomePageWelcomeGreetingEnded());
-      },
-      animatedTexts: [
-        TypewriterAnimatedText(
-          'Hello world !',
-          textStyle: const TextStyle(
-            fontSize: 32.0,
-            fontWeight: FontWeight.bold,
-          ),
-          speed: const Duration(milliseconds: 200),
-          curve: Curves.bounceInOut,
-        ),
-      ],
     );
   }
 }
@@ -378,7 +341,7 @@ class _MyPhotoWidget extends StatelessWidget {
 
     return Image.asset(
       'assets/images/gumwall.jpeg',
-      height: height * 0.8,
+      height: height * 0.6,
     );
   }
 }
