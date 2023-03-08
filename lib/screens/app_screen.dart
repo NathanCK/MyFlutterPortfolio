@@ -1,6 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_flutter_website/beam_locations/app_path.dart';
 import 'package:my_flutter_website/beam_locations/experience_location.dart';
 import 'package:my_flutter_website/beam_locations/home_location.dart';
 import 'package:my_flutter_website/bloc/app_status_bloc.dart';
@@ -20,6 +21,7 @@ class AppScreen extends StatelessWidget {
         ExperienceLocation(),
       ],
     ),
+    notFoundRedirectNamed: AppPath.home,
   );
 
   AppScreen({super.key});
