@@ -1,8 +1,10 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_flutter_website/beam_locations/app_path.dart';
 import 'package:my_flutter_website/bloc/app_status_bloc.dart';
+import 'package:my_flutter_website/generated/l10n.dart';
 import 'package:my_flutter_website/screens/app_screen.dart';
 import 'package:my_flutter_website/utils/my_theme.dart';
 
@@ -38,6 +40,12 @@ class MyApp extends StatelessWidget {
           BlocProvider<AppStatusBloc>(create: (_) => appStatusBloc),
         ],
         child: MaterialApp.router(
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
           routerDelegate: routerDelegate,
           routeInformationParser: BeamerParser(),
           theme: ThemeData.light().copyWith(
