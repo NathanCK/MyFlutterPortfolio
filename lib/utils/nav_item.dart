@@ -14,7 +14,10 @@ enum NavItem {
   final Icon icon;
   final Icon selectedIcon;
 
+  /// will return 0 if not found by the [url]
   static int getMatchIndex(String url) {
-    return NavItem.values.indexWhere((element) => url.contains(element.url));
+    final searchResult =
+        NavItem.values.indexWhere((element) => url.contains(element.url));
+    return searchResult == -1 ? 0 : searchResult;
   }
 }
