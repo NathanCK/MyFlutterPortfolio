@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_flutter_website/bloc/my_home_page_bloc.dart';
 import 'package:my_flutter_website/enum/external_profile_type.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
+import 'package:my_flutter_website/generated/l10n.dart';
 import 'package:my_flutter_website/utils/text_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -327,10 +328,9 @@ class _IntroductionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AutoSizeText(
-      'My name is Kin Chan, but you can call me Nathan.\n'
-      'I am a Software Engineer, who develops both frontend and backend application.',
-      style: TextStyle(
+    return AutoSizeText(
+      S.of(context).home_page_intro_statement,
+      style: const TextStyle(
         fontSize: 18.0,
         fontWeight: FontWeight.bold,
       ),
