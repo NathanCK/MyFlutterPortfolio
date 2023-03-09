@@ -286,10 +286,6 @@ class _LargeScreenContent extends StatelessWidget {
   }
 }
 
-// class _GreetingToRealContentTransitWidget extends StatelessWidget {
-
-// }
-
 class _AnimatedGreetingSentenceWidget extends StatelessWidget {
   final bool shouldMove;
   final bool shouldShow;
@@ -313,58 +309,52 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double top;
     double left;
-    if (shouldShow) {
-      // center the greeting
-      top = (height / 2) - (padding.vertical / 2);
-      left = ((width / 2) - (padding.horizontal / 2)) -
-          welcomeGreetingTextSize.width / 2;
-    } else if (screenSizeType == ScreenSizeType.big) {
-      // center left for big screen
-      top = (height / 2) - (padding.vertical / 2) - 100;
-      left = 0;
-    } else {
-      // top left for small screen
-      top = 0;
-      left = 0;
-    }
 
-    return Padding(
-      padding: padding,
-      child: Stack(children: [
-        AnimatedPositioned(
-          curve: Curves.fastOutSlowIn,
-          duration: const Duration(seconds: 1),
-          left: left,
-          top: top,
-          child: AnimatedTextKit(
-            isRepeatingAnimation: false,
-            pause: Duration.zero,
-            onFinished: () {
-              context
-                  .read<MyHomePageBloc>()
-                  .add(HomePageWelcomeGreetingEnded());
-            },
-            animatedTexts: [
-              TypewriterAnimatedText(
-                'Hello world !',
-                textStyle: const TextStyle(
-                  fontSize: 32.0,
-                  fontWeight: FontWeight.bold,
+    // center the greeting
+    top = (height / 2) - (padding.vertical / 2);
+    left = ((width / 2) - (padding.horizontal / 2)) -
+        welcomeGreetingTextSize.width / 2;
+
+    return AnimatedOpacity(
+      opacity: shouldShow ? 1.0 : 0.0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease,
+      child: Padding(
+        padding: padding,
+        child: Stack(children: [
+          AnimatedPositioned(
+            curve: Curves.fastOutSlowIn,
+            duration: const Duration(seconds: 1),
+            left: left,
+            top: top,
+            child: AnimatedTextKit(
+              isRepeatingAnimation: false,
+              pause: Duration.zero,
+              onFinished: () {
+                context
+                    .read<MyHomePageBloc>()
+                    .add(HomePageWelcomeGreetingEnded());
+              },
+              animatedTexts: [
+                TypewriterAnimatedText(
+                  'Hello world !',
+                  textStyle: const TextStyle(
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  speed: const Duration(milliseconds: 200),
+                  curve: Curves.bounceInOut,
                 ),
-                speed: const Duration(milliseconds: 200),
-                curve: Curves.bounceInOut,
-              ),
-            ],
+              ],
+            ),
           ),
-          onEnd: () {
-            if (shouldMove) {
-              context
-                  .read<MyHomePageBloc>()
-                  .add(HomePageWelcomeGreetingMoved());
-            }
-          },
-        ),
-      ]),
+        ]),
+      ),
+      onEnd: () {
+        if (shouldMove) {
+          context.read<MyHomePageBloc>().add(HomePageWelcomeGreetingMoved());
+        }
+      },
     );
   }
 }
