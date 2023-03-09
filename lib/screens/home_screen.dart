@@ -450,9 +450,12 @@ class _MyLargePhotoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
 
-    return Image.asset(
-      'assets/images/gum_wall.jpeg',
-      height: height * 0.5,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Image.asset(
+        'assets/images/gum_wall.jpeg',
+        height: height * 0.5,
+      ),
     );
   }
 }
