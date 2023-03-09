@@ -74,7 +74,6 @@ final BottomNavigationBarThemeData myBottomNavigationBarThemeData =
     textStyle: const TextStyle(overflow: TextOverflow.ellipsis),
   ),
   showUnselectedLabels: false,
-  enableFeedback: true,
   unselectedIconTheme: const IconThemeData(size: 24),
   selectedIconTheme: const IconThemeData(
     size: 28,
@@ -107,6 +106,15 @@ final NavigationRailThemeData myNavigationRailThemeData =
 );
 // final MyDrawerTheme myDrawerDarkTheme = MyDrawerTheme(backgroundColor: const Color(value), buttonSelectedIndicatorColor: buttonSelectedIndicatorColor, buttonTheme: buttonTheme)
 
-final lightTheme = ThemeData.light().copyWith(
+final lightTheme = ThemeData.light(
+  useMaterial3: true,
+).copyWith(
+  splashColor: Colors.transparent,
+  highlightColor: Colors.transparent,
+  iconButtonTheme: IconButtonThemeData(
+    style: IconButton.styleFrom(
+      highlightColor: Colors.transparent,
+    ),
+  ),
   textTheme: TextTheme(bodyLarge: GoogleFonts.openSans(color: Colors.black)),
 );
