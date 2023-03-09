@@ -24,8 +24,6 @@ class MyApp extends StatelessWidget {
     locationBuilder: RoutesLocationBuilder(
       routes: {
         AppPath.home: (context, state, data) => AppScreen(),
-        AppPath.about: (context, state, data) => AppScreen(),
-        AppPath.experience: (context, state, data) => AppScreen(),
       },
     ),
     notFoundRedirectNamed: AppPath.home,
