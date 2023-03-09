@@ -106,7 +106,7 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
 
   ScreenSizeType _getScreenSizeType(
       {required double screenHeight, required double screenWidth}) {
-    if (screenHeight <= 400 || screenWidth <= 375) {
+    if (screenHeight <= 400 || screenWidth <= 412) {
       return ScreenSizeType.small;
     }
 
