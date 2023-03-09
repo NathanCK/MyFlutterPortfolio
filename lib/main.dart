@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: S.delegate.supportedLocales,
           routerDelegate: routerDelegate,
           routeInformationParser: BeamerParser(),
-          theme: ThemeData.light().copyWith(
+          theme: lightTheme.copyWith(
               bottomNavigationBarTheme: myBottomNavigationBarThemeData,
               navigationRailTheme: myNavigationRailThemeData,
               extensions: [

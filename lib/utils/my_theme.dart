@@ -101,3 +101,7 @@ final NavigationRailThemeData myNavigationRailThemeData =
   labelType: NavigationRailLabelType.selected,
 );
 // final MyDrawerTheme myDrawerDarkTheme = MyDrawerTheme(backgroundColor: const Color(value), buttonSelectedIndicatorColor: buttonSelectedIndicatorColor, buttonTheme: buttonTheme)
+
+final lightTheme = ThemeData.light().copyWith(
+  textTheme: TextTheme(bodyLarge: GoogleFonts.openSans(color: Colors.black)),
+);
