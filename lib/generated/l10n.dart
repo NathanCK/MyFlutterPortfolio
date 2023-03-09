@@ -50,10 +50,10 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `I am Nathan Chan and I'm a software engineer with a focus on mobile and backend development. Over the past two years, I have gained extensive experience in building cross-platform mobile applications using Flutter and developing backend systems using C#. My passion for technology has led me to become a dedicated and skilled software engineer, with a strong foundation in computer science and a commitment to delivering high-quality solutions.`
+  /// `I'm Nathan Chan and I'm a software developer with a focus on mobile and backend development. Over the past two years, I have gained extensive experience in building cross-platform mobile applications using Flutter and developing backend systems using C#. My passion for technology has led me to become a dedicated and skilled software engineer, with a strong foundation in computer science and a commitment to delivering high-quality solutions.`
   String get home_page_intro_statement {
     return Intl.message(
-      'I am Nathan Chan and I\'m a software engineer with a focus on mobile and backend development. Over the past two years, I have gained extensive experience in building cross-platform mobile applications using Flutter and developing backend systems using C#. My passion for technology has led me to become a dedicated and skilled software engineer, with a strong foundation in computer science and a commitment to delivering high-quality solutions.',
+      'I\'m Nathan Chan and I\'m a software developer with a focus on mobile and backend development. Over the past two years, I have gained extensive experience in building cross-platform mobile applications using Flutter and developing backend systems using C#. My passion for technology has led me to become a dedicated and skilled software engineer, with a strong foundation in computer science and a commitment to delivering high-quality solutions.',
       name: 'home_page_intro_statement',
       desc: '',
       args: [],
