@@ -414,7 +414,7 @@ class _MySmallPhotoWidget extends StatelessWidget {
       child: CircleAvatar(
         radius: photoSize,
         backgroundImage: const AssetImage(
-          'assets/images/gumWall.jpeg',
+          'assets/images/gum_wall.jpeg',
         ),
       ),
     );
@@ -429,7 +429,7 @@ class _MyLargePhotoWidget extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return Image.asset(
-      'assets/images/gumWall.jpeg',
+      'assets/images/gum_wall.jpeg',
       height: height * 0.5,
     );
   }
