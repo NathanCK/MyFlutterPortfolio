@@ -45,12 +45,15 @@ class _BotNavBarState extends State<BotNavBar> {
             tooltip: e.label,
             label: e.label,
             icon: e.icon,
-            activeIcon: Icon(
-              e.selectedIcon.icon,
-              shadows: const [
-                Shadow(
-                    color: Color.fromARGB(255, 112, 255, 146), blurRadius: 20),
-              ],
+            activeIcon: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(173, 90, 90, 92),
+              ),
+              child: Icon(
+                e.selectedIcon.icon,
+              ),
             )))
         .toList();
   }
