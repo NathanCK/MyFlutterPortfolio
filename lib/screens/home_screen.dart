@@ -126,25 +126,56 @@ class _SmallScreenContent extends StatelessWidget {
         duration: const Duration(seconds: 1),
         builder: (BuildContext context, double opacity, Widget? child) {
           return ListView(
-            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 40),
             children: [
-              SizedBox(
-                height: welcomeGreetingTextSize.height + verticalPadding,
-                child: const Text(
-                  'Hello world !',
-                  style: TextStyle(
-                    fontSize: 32.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const _MySmallPhotoWidget(photoSize: 32),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Kin (Nathan) Chan',
+                        style: TextStyle(
+                          fontSize: 32.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      _ExternalLinkWidget(
+                        iconSize: 16,
+                        padding: EdgeInsets.all(8),
+                      ),
+                    ],
+                  )
+                ],
               ),
               Opacity(
                 opacity: opacity,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    _MyPhotoWidget(),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Divider(thickness: 2),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      'Hello world !',
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
                     _IntroductionWidget(),
-                    _ExternalLinkWidget(),
+                    SizedBox(
+                      height: 8,
+                    ),
                   ],
                 ),
               ),
@@ -228,7 +259,7 @@ class _LargeScreenContent extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        _MyPhotoWidget(),
+                        _MyLargePhotoWidget(),
                       ],
                     ),
                   ),
@@ -330,6 +361,7 @@ class _IntroductionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoSizeText(
       S.of(context).home_page_intro_statement,
+      textAlign: TextAlign.justify,
       style: const TextStyle(
         fontSize: 18.0,
         fontWeight: FontWeight.bold,
@@ -340,10 +372,12 @@ class _IntroductionWidget extends StatelessWidget {
 }
 
 class _ExternalLinkWidget extends StatelessWidget {
+  final double iconSize;
+  final EdgeInsetsGeometry? padding;
   final List<ExternalProfileType> _externalTypeList =
       ExternalProfileType.values;
 
-  const _ExternalLinkWidget();
+  const _ExternalLinkWidget({this.iconSize = 32, this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -353,7 +387,8 @@ class _ExternalLinkWidget extends StatelessWidget {
       children: List.generate(_externalTypeList.length, (index) {
         final externalType = _externalTypeList[index];
         return IconButton(
-            iconSize: 32,
+            padding: padding,
+            iconSize: iconSize,
             onPressed: () async {
               final uri = Uri.parse(externalType.url);
               if (!await launchUrl(uri)) {
@@ -366,8 +401,30 @@ class _ExternalLinkWidget extends StatelessWidget {
   }
 }
 
-class _MyPhotoWidget extends StatelessWidget {
-  const _MyPhotoWidget();
+class _MySmallPhotoWidget extends StatelessWidget {
+  final double photoSize;
+
+  const _MySmallPhotoWidget({required this.photoSize});
+
+  @override
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+
+    return CircleAvatar(
+      backgroundColor: Colors.black,
+      radius: photoSize + 4,
+      child: CircleAvatar(
+        radius: photoSize,
+        backgroundImage: const AssetImage(
+          'assets/images/gumwall.jpeg',
+        ),
+      ),
+    );
+  }
+}
+
+class _MyLargePhotoWidget extends StatelessWidget {
+  const _MyLargePhotoWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -375,7 +432,7 @@ class _MyPhotoWidget extends StatelessWidget {
 
     return Image.asset(
       'assets/images/gumwall.jpeg',
-      height: height * 0.6,
+      height: height * 0.5,
     );
   }
 }
