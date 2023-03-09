@@ -64,15 +64,21 @@ final BottomNavigationBarThemeData myBottomNavigationBarThemeData =
   elevation: 0,
   backgroundColor: const Color(0xFF1c2229),
   unselectedItemColor: Colors.white,
-  selectedItemColor: const Color.fromARGB(216, 48, 241, 93),
+  selectedItemColor: Colors.white,
   unselectedLabelStyle: GoogleFonts.openSans(
+    color: Colors.white,
+    textStyle: const TextStyle(overflow: TextOverflow.ellipsis),
+  ),
+  selectedLabelStyle: GoogleFonts.openSans(
     color: Colors.white,
     textStyle: const TextStyle(overflow: TextOverflow.ellipsis),
   ),
   showUnselectedLabels: false,
   enableFeedback: true,
   unselectedIconTheme: const IconThemeData(size: 24),
-  selectedIconTheme: const IconThemeData(size: 28),
+  selectedIconTheme: const IconThemeData(
+    size: 28,
+  ),
 );
 
 final NavigationRailThemeData myNavigationRailThemeData =
@@ -82,10 +88,9 @@ final NavigationRailThemeData myNavigationRailThemeData =
   useIndicator: true,
   indicatorColor: const Color.fromARGB(173, 90, 90, 92),
   unselectedIconTheme: const IconThemeData(color: Colors.white),
-  selectedIconTheme:
-      const IconThemeData(color: Color.fromARGB(253, 2, 162, 39), shadows: [
-    Shadow(color: Color.fromARGB(255, 112, 255, 146), blurRadius: 20),
-  ]),
+  selectedIconTheme: const IconThemeData(
+    color: Color.fromARGB(253, 2, 162, 39),
+  ),
   selectedLabelTextStyle: GoogleFonts.openSans(
     color: Colors.white,
     fontSize: 12,
