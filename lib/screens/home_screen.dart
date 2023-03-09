@@ -51,10 +51,21 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
           final screenSizeType =
               _getScreenSizeType(screenHeight: height, screenWidth: width);
 
-          EdgeInsetsGeometry screenPadding =
-              screenSizeType == ScreenSizeType.big
-                  ? const EdgeInsets.all(50)
-                  : const EdgeInsets.symmetric(horizontal: 20, vertical: 50);
+          EdgeInsetsGeometry screenPadding;
+          switch (screenSizeType) {
+            case ScreenSizeType.big:
+              screenPadding = const EdgeInsets.all(50);
+              break;
+            case ScreenSizeType.medium:
+              screenPadding = const EdgeInsets.fromLTRB(20, 50, 20, 20);
+              break;
+            case ScreenSizeType.small:
+              screenPadding =
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 20);
+              break;
+            default:
+              screenPadding = const EdgeInsets.all(20);
+          }
 
           return BlocBuilder<MyHomePageBloc, MyHomePageState>(
             builder: (context, state) {
@@ -71,7 +82,8 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                 );
               }
 
-              if (screenSizeType == ScreenSizeType.big) {
+              if (screenSizeType == ScreenSizeType.big ||
+                  screenSizeType == ScreenSizeType.medium) {
                 return _LargeScreenContent(
                   height: height,
                   width: width,
@@ -218,71 +230,68 @@ class _LargeScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final top = (height / 2) - verticalPadding - 100;
-
-    return TweenAnimationBuilder(
-        tween: Tween<double>(begin: 0.0, end: 1.0),
-        curve: Curves.ease,
-        duration: const Duration(seconds: 1),
-        builder: (BuildContext context, double opacity, Widget? child) {
-          return Padding(
-            padding: padding,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: welcomeGreetingTextSize.height + top,
-                        child: const Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            'Hello world !',
-                            style: TextStyle(
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Opacity(
-                        opacity: opacity,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              width: (width / 2),
-                              height:
-                                  (height - welcomeGreetingTextSize.height) / 4,
-                              child: const Padding(
+    return Center(
+      child: TweenAnimationBuilder(
+          tween: Tween<double>(begin: 0.0, end: 1.0),
+          curve: Curves.ease,
+          duration: const Duration(seconds: 1),
+          builder: (BuildContext context, double opacity, Widget? child) {
+            return Opacity(
+              opacity: opacity,
+              child: Padding(
+                padding: padding,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 10,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: welcomeGreetingTextSize.height,
+                                child: const Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Text(
+                                    'Hello world !',
+                                    style: TextStyle(
+                                      fontSize: 32.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16.0),
                                 child: _IntroductionWidget(),
                               ),
-                            ),
-                            const _ExternalLinkWidget(),
-                            SizedBox(
-                              height: height * 0.2,
-                            ),
-                          ],
+                              const _ExternalLinkWidget(),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Opacity(
-                    opacity: opacity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        _MyLargePhotoWidget(),
+                        const Expanded(
+                          flex: 1,
+                          child: SizedBox.shrink(),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              _MyLargePhotoWidget(),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          );
-        });
+              ),
+            );
+          }),
+    );
   }
 }
 
@@ -366,12 +375,14 @@ class _IntroductionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoSizeText(
       S.of(context).home_page_intro_statement,
+      overflow: TextOverflow.ellipsis,
       textAlign: TextAlign.justify,
       style: const TextStyle(
         fontSize: 18.0,
         fontWeight: FontWeight.bold,
       ),
       maxLines: 15,
+      stepGranularity: 0.1,
     );
   }
 }
