@@ -5,11 +5,13 @@ class MyDrawerTheme extends ThemeExtension<MyDrawerTheme> {
   final Color backgroundColor;
   final Color buttonSelectedIndicatorColor;
   final ElevatedButtonThemeData buttonTheme;
+  final TextStyle labelStyle;
 
   const MyDrawerTheme({
     required this.backgroundColor,
     required this.buttonSelectedIndicatorColor,
     required this.buttonTheme,
+    required this.labelStyle,
   });
 
   @override
@@ -17,12 +19,14 @@ class MyDrawerTheme extends ThemeExtension<MyDrawerTheme> {
     Color? backgroundColor,
     Color? buttonSelectedIndicatorColor,
     ElevatedButtonThemeData? buttonTheme,
+    TextStyle? labelStyle,
   }) {
     return MyDrawerTheme(
       backgroundColor: backgroundColor ?? this.backgroundColor,
       buttonSelectedIndicatorColor:
           buttonSelectedIndicatorColor ?? this.buttonSelectedIndicatorColor,
       buttonTheme: buttonTheme ?? this.buttonTheme,
+      labelStyle: labelStyle ?? this.labelStyle,
     );
   }
 
@@ -38,15 +42,17 @@ class MyDrawerTheme extends ThemeExtension<MyDrawerTheme> {
       buttonSelectedIndicatorColor: Color.lerp(
           buttonSelectedIndicatorColor, other.buttonSelectedIndicatorColor, t)!,
       buttonTheme: buttonTheme,
+      labelStyle: labelStyle.merge(other.labelStyle),
     );
   }
 }
 
 final MyDrawerTheme myDrawerLightTheme = MyDrawerTheme(
-    backgroundColor: const Color(0xFF1c2229),
-    buttonSelectedIndicatorColor: const Color(0xFF0dd83d),
-    buttonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(
+  backgroundColor: const Color(0xFF1c2229),
+  buttonSelectedIndicatorColor: const Color(0xFF0dd83d),
+  buttonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      iconColor: MaterialStatePropertyAll(Colors.white),
       backgroundColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.selected) ||
             states.contains(MaterialState.hovered)) {
@@ -54,10 +60,14 @@ final MyDrawerTheme myDrawerLightTheme = MyDrawerTheme(
         }
         return const Color(0xFF1c2229);
       }),
-      textStyle: MaterialStatePropertyAll(GoogleFonts.openSans(
-          textStyle: const TextStyle(overflow: TextOverflow.ellipsis))),
       padding: const MaterialStatePropertyAll(EdgeInsets.all(8)),
-    )));
+    ),
+  ),
+  labelStyle: GoogleFonts.openSans(
+    color: Colors.white,
+    textStyle: const TextStyle(overflow: TextOverflow.ellipsis),
+  ),
+);
 
 final BottomNavigationBarThemeData myBottomNavigationBarThemeData =
     BottomNavigationBarThemeData(

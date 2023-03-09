@@ -39,11 +39,11 @@ class _AppDrawerState extends State<AppDrawer> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(12), bottomRight: Radius.circular(12))),
-      child: _getDrawerButtonList(path),
+      child: _getDrawerButtonList(path, drawerTheme),
     );
   }
 
-  Widget _getDrawerButtonList(String currentPath) {
+  Widget _getDrawerButtonList(String currentPath, MyDrawerTheme drawerTheme) {
     const navItemList = NavItem.values;
 
     return Padding(
@@ -64,6 +64,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       child: Text(
                         navItem.label,
                         maxLines: 1,
+                        style: drawerTheme.labelStyle,
                       ),
                     ),
                   ],
