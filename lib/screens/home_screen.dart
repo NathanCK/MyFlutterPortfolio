@@ -408,15 +408,13 @@ class _MySmallPhotoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-
     return CircleAvatar(
       backgroundColor: Colors.black,
       radius: photoSize + 4,
       child: CircleAvatar(
         radius: photoSize,
         backgroundImage: const AssetImage(
-          'assets/images/gumwall.jpeg',
+          'assets/images/gumWall.jpeg',
         ),
       ),
     );
@@ -431,7 +429,7 @@ class _MyLargePhotoWidget extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return Image.asset(
-      'assets/images/gumwall.jpeg',
+      'assets/images/gumWall.jpeg',
       height: height * 0.5,
     );
   }
