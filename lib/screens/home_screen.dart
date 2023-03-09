@@ -107,6 +107,9 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
 }
 
 class _SmallScreenContent extends StatelessWidget {
+  static const double _iconAndInfoSpacing = 16;
+  static const double _photoSize = 32;
+  static const double _photoBorderRadius = 4;
   final Size welcomeGreetingTextSize;
   final EdgeInsetsGeometry padding;
   final double horizontalPadding;
@@ -120,68 +123,80 @@ class _SmallScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final nameWidth = width -
+        (horizontalPadding * 2) -
+        ((_photoSize + _photoBorderRadius) * 2) -
+        _iconAndInfoSpacing;
+
     return TweenAnimationBuilder(
-        tween: Tween<double>(begin: 0.0, end: 1.0),
-        curve: Curves.ease,
-        duration: const Duration(seconds: 1),
-        builder: (BuildContext context, double opacity, Widget? child) {
-          return ListView(
-            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 40),
+      tween: Tween<double>(begin: 0.0, end: 1.0),
+      curve: Curves.ease,
+      duration: const Duration(seconds: 1),
+      builder: (BuildContext context, double opacity, Widget? child) {
+        return Opacity(
+          opacity: opacity,
+          child: child,
+        );
+      },
+      child: ListView(
+        padding: EdgeInsets.symmetric(
+            vertical: verticalPadding, horizontal: horizontalPadding),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const _MySmallPhotoWidget(photoSize: 32),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Kin (Nathan) Chan',
-                        style: TextStyle(
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      _ExternalLinkWidget(
-                        iconSize: 16,
-                        padding: EdgeInsets.all(8),
-                      ),
-                    ],
-                  )
-                ],
+              const _MySmallPhotoWidget(
+                photoSize: _photoSize,
+                borderRadius: _photoBorderRadius,
               ),
-              Opacity(
-                opacity: opacity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Divider(thickness: 2),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      'Hello world !',
+              const SizedBox(
+                width: _iconAndInfoSpacing,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: nameWidth,
+                    child: const AutoSizeText(
+                      'Kin (Nathan) Chan',
+                      textAlign: TextAlign.center,
+                      maxFontSize: 32,
+                      maxLines: 1,
                       style: TextStyle(
-                        fontSize: 32.0,
+                        fontSize: 32,
                         fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    _IntroductionWidget(),
-                    SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                ),
+                  ),
+                  const _ExternalLinkWidget(
+                    iconSize: 32,
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                ],
+              )
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              SizedBox(
+                height: 8,
+              ),
+              Divider(thickness: 2),
+              SizedBox(
+                height: 8,
+              ),
+              _IntroductionWidget(),
+              SizedBox(
+                height: 8,
               ),
             ],
-          );
-        });
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -395,7 +410,11 @@ class _ExternalLinkWidget extends StatelessWidget {
                 throw Exception('Could not launch $uri');
               }
             },
-            icon: Image.asset(externalType.iconPath));
+            icon: Image.asset(
+              externalType.iconPath,
+              height: iconSize,
+              width: iconSize,
+            ));
       }),
     );
   }
@@ -403,14 +422,16 @@ class _ExternalLinkWidget extends StatelessWidget {
 
 class _MySmallPhotoWidget extends StatelessWidget {
   final double photoSize;
+  final double borderRadius;
 
-  const _MySmallPhotoWidget({required this.photoSize});
+  const _MySmallPhotoWidget(
+      {required this.photoSize, required this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
       backgroundColor: Colors.black,
-      radius: photoSize + 4,
+      radius: photoSize + borderRadius,
       child: CircleAvatar(
         radius: photoSize,
         backgroundImage: const AssetImage(
