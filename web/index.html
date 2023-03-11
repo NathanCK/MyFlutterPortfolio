@@ -42,13 +42,18 @@
 <body>
   <script>
     window.addEventListener('load', function(ev) {
+      // Run-time engine configuration
+    let config = {
+      renderer: "canvaskit",
+    }
+
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
+          engineInitializer.initializeEngine(config).then(function(appRunner) {
             appRunner.runApp();
           });
         }
