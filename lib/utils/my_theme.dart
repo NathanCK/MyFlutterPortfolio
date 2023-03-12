@@ -119,6 +119,12 @@ final NavigationRailThemeData myNavigationRailThemeData =
 final lightTheme = ThemeData.light(
   useMaterial3: true,
 ).copyWith(
+  primaryTextTheme: TextTheme(
+      titleLarge: GoogleFonts.openSans(
+    color: Colors.black,
+    fontSize: 32,
+    fontWeight: FontWeight.bold,
+  )),
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
   iconButtonTheme: IconButtonThemeData(
