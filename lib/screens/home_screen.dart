@@ -7,6 +7,7 @@ import 'package:my_flutter_website/enum/external_profile_type.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
 import 'package:my_flutter_website/generated/l10n.dart';
 import 'package:my_flutter_website/utils/text_utils.dart';
+import 'package:my_flutter_website/utils/themed_texts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -36,11 +37,9 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final welcomeGreetingTextSize = TextUtils.calculateTextSize('Hello world !',
-        style: const TextStyle(
-          fontSize: 32.0,
-          fontWeight: FontWeight.bold,
-        ));
+    final titleStyle = Theme.of(context).primaryTextTheme.titleLarge!;
+    final welcomeGreetingTextSize =
+        TextUtils.calculateTextSize('Hello world !', style: titleStyle);
 
     return Scaffold(
       body: LayoutBuilder(
@@ -170,16 +169,12 @@ class _SmallScreenContent extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: nameWidth,
-                    child: const AutoSizeText(
+                    child: const TitleText(
                       'Kin (Nathan) Chan',
                       textAlign: TextAlign.center,
                       maxFontSize: 32,
                       maxLines: 1,
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   const _ExternalLinkWidget(
@@ -253,15 +248,8 @@ class _LargeScreenContent extends StatelessWidget {
                               SizedBox(
                                 height: welcomeGreetingTextSize.height,
                                 child: const Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Text(
-                                    'Hello world !',
-                                    style: TextStyle(
-                                      fontSize: 32.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
+                                    alignment: Alignment.bottomLeft,
+                                    child: TitleText('Hello world !')),
                               ),
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -316,6 +304,7 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final titleStyle = Theme.of(context).primaryTextTheme.titleLarge!;
     double top;
     double left;
 
@@ -347,10 +336,7 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
               animatedTexts: [
                 TypewriterAnimatedText(
                   'Hello world !',
-                  textStyle: const TextStyle(
-                    fontSize: 32.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  textStyle: titleStyle,
                   speed: const Duration(milliseconds: 200),
                   curve: Curves.bounceInOut,
                 ),
