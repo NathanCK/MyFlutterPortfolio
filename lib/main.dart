@@ -12,7 +12,7 @@ import 'beam_locations/home_location.dart';
 
 void main() {
   final AppStatusBloc appStatusBloc = AppStatusBloc();
-  Beamer.setPathUrlStrategy();
+  // Beamer.setPathUrlStrategy(); // Github Pages doesn't support that for now
 
   runApp(MyApp(appStatusBloc: appStatusBloc));
 }
