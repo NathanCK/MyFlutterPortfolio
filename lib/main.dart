@@ -1,16 +1,22 @@
 import 'package:beamer/beamer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_flutter_website/beam_locations/app_path.dart';
 import 'package:my_flutter_website/bloc/app_status_bloc.dart';
+import 'package:my_flutter_website/firebase_options.dart';
 import 'package:my_flutter_website/generated/l10n.dart';
 import 'package:my_flutter_website/screens/app_screen.dart';
 import 'package:my_flutter_website/utils/my_theme.dart';
 
 import 'beam_locations/home_location.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   final AppStatusBloc appStatusBloc = AppStatusBloc();
   // usePathUrlStrategy();
   Beamer.setPathUrlStrategy(); // Github Pages doesn't support that for now

@@ -51,6 +51,7 @@ dependencies:
     git:
       url: https://github.com/NathanCK/game-of-life.git
       ref: main
+  firebase_core: ^2.10.0
 
 dev_dependencies:
   flutter_test:
