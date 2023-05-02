@@ -52,7 +52,7 @@ final MyDrawerTheme myDrawerLightTheme = MyDrawerTheme(
   buttonSelectedIndicatorColor: const Color(0xFF0dd83d),
   buttonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      iconColor: MaterialStatePropertyAll(Colors.white),
+      iconColor: const MaterialStatePropertyAll(Colors.white),
       backgroundColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.selected) ||
             states.contains(MaterialState.hovered)) {

@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:conway_game_of_life/game_board.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_flutter_website/bloc/analytics_bloc.dart';
 import 'package:my_flutter_website/bloc/my_home_page_bloc.dart';
 import 'package:my_flutter_website/enum/external_profile_type.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
@@ -409,8 +410,15 @@ class _ExternalLinkWidget extends StatelessWidget {
             iconSize: iconSize,
             onPressed: () async {
               final uri = Uri.parse(externalType.url);
+
               if (!await launchUrl(uri)) {
                 throw Exception('Could not launch $uri');
+              }
+
+              if (context.mounted) {
+                context
+                    .read<AnalyticsBloc>()
+                    .add(AnalyticsOutLinkButtonPressed(externalType.name));
               }
             },
             icon: Image.asset(
