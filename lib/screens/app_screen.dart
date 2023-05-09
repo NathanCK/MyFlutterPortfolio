@@ -8,18 +8,22 @@ import 'package:my_flutter_website/enum/nav_bar_type.dart';
 class AppScreen extends StatelessWidget {
   final _beamerKey = GlobalKey<BeamerState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _routerDelegate = BeamerDelegate(
-    transitionDelegate: const NoAnimationTransitionDelegate(),
-    locationBuilder: BeamerLocationBuilder(
-      beamLocations: [
-        HomeLocation(),
-        ExperienceLocation(),
-      ],
-    ),
-    notFoundRedirectNamed: AppPath.home,
-  );
+  final BeamerDelegate _routerDelegate;
 
-  AppScreen({super.key});
+  final List<NavigatorObserver> navigatorObservers;
+
+  AppScreen({super.key, this.navigatorObservers = const <NavigatorObserver>[]})
+      : _routerDelegate = BeamerDelegate(
+          navigatorObservers: navigatorObservers,
+          transitionDelegate: const NoAnimationTransitionDelegate(),
+          locationBuilder: BeamerLocationBuilder(
+            beamLocations: [
+              HomeLocation(),
+              ExperienceLocation(),
+            ],
+          ),
+          notFoundRedirectNamed: AppPath.home,
+        );
 
   @override
   Widget build(BuildContext context) {
