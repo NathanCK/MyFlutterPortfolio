@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,10 +16,43 @@ Future<void> main() async {
   await _init();
 
   final AppStatusBloc appStatusBloc = AppStatusBloc();
+  final AnalyticsBloc analyticsBloc = AnalyticsBloc();
+
   // usePathUrlStrategy();
   Beamer.setPathUrlStrategy(); // Github Pages doesn't support that for now
 
-  runApp(MyApp(appStatusBloc: appStatusBloc));
+  FirebaseAnalytics? analyticsInstance;
+  try {
+    analyticsInstance = FirebaseAnalytics.instance;
+  } catch (e) {
+    debugPrint('failed to get analytics instance');
+  }
+
+  final List<NavigatorObserver> navigatorObservers = [];
+
+  if (analyticsInstance != null) {
+    FirebaseAnalyticsObserver observer =
+        FirebaseAnalyticsObserver(analytics: analyticsInstance);
+
+    navigatorObservers.add(observer);
+  }
+
+  final routerDelegate = BeamerDelegate(
+    initialPath: '/home',
+    locationBuilder: RoutesLocationBuilder(
+      routes: {
+        AppPath.home: (context, state, data) =>
+            AppScreen(navigatorObservers: navigatorObservers),
+      },
+    ),
+    notFoundRedirectNamed: AppPath.home,
+  );
+
+  runApp(MyApp(
+    appStatusBloc: appStatusBloc,
+    routerDelegate: routerDelegate,
+    analyticsBloc: analyticsBloc,
+  ));
 }
 
 Future<void> _init() async {
@@ -33,24 +67,22 @@ Future<void> _init() async {
 
 class MyApp extends StatelessWidget {
   final AppStatusBloc appStatusBloc;
-  final routerDelegate = BeamerDelegate(
-    initialPath: '/home',
-    locationBuilder: RoutesLocationBuilder(
-      routes: {
-        AppPath.home: (context, state, data) => AppScreen(),
-      },
-    ),
-    notFoundRedirectNamed: AppPath.home,
-  );
+  final AnalyticsBloc analyticsBloc;
+  final BeamerDelegate routerDelegate;
 
-  MyApp({super.key, required this.appStatusBloc});
+  const MyApp({
+    super.key,
+    required this.routerDelegate,
+    required this.appStatusBloc,
+    required this.analyticsBloc,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
           BlocProvider<AppStatusBloc>(create: (_) => appStatusBloc),
-          BlocProvider<AnalyticsBloc>(create: (_) => AnalyticsBloc()),
+          BlocProvider<AnalyticsBloc>(create: (_) => analyticsBloc),
         ],
         child: MaterialApp.router(
           localizationsDelegates: const [
