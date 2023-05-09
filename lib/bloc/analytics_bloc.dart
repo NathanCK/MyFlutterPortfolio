@@ -18,12 +18,14 @@ class AnalyticsBloc extends Bloc<AnalyticsEvent, AnalyticsState> {
     add(AnalyticsInitialized());
   }
 
-  void _onAnalyticsInitialized(
-      AnalyticsEvent event, Emitter<AnalyticsState> emit) {
+  Future<void> _onAnalyticsInitialized(
+      AnalyticsEvent event, Emitter<AnalyticsState> emit) async {
     if (_analyticsInstance != null) return;
 
     try {
       _analyticsInstance = FirebaseAnalytics.instance;
+
+      await _analyticsInstance!.setAnalyticsCollectionEnabled(true);
     } catch (e) {
       debugPrint('failed to get analytics instance');
     }
