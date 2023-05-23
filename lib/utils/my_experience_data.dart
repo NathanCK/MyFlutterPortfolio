@@ -4,6 +4,7 @@ import 'package:my_flutter_website/models/timeline_event_model.dart';
 /// TODO: can store it on firestore or something like that.
 final timelineEventModels = [
   TimelineEventModel(
+    1,
     DateTime(2016, 9),
     DateTime(2019, 12),
     'BA in Computer Science',
@@ -17,6 +18,7 @@ final timelineEventModels = [
     icon: const Icon(Icons.ac_unit),
   ),
   TimelineEventModel(
+    2,
     DateTime(2019, 10),
     DateTime(2020, 3),
     'Software Engineer Internship',
@@ -29,6 +31,7 @@ final timelineEventModels = [
     timelineDotWidget: const Icon(Icons.work),
   ),
   TimelineEventModel(
+    3,
     DateTime(2020, 3),
     DateTime(2021, 1),
     'Software Developer',
@@ -43,6 +46,7 @@ final timelineEventModels = [
         '\n• Managed asynchronous work using TFS for version controlling.',
   ),
   TimelineEventModel(
+    4,
     DateTime(2021, 7),
     DateTime(2021, 12),
     'Software Engineer',
@@ -57,14 +61,18 @@ final timelineEventModels = [
         '\n• Interacted with a third-party iOS app for payment purpose.',
   ),
   TimelineEventModel(
-      DateTime(2022, 1), DateTime(2023, 1), 'Mobile Development Engineer',
-      subtitle: 'Signify',
-      shortDescription: 'Flutter, Dart',
-      longDescription:
-          '• Revamped the original WiZ app that controls WiZ Connected smart devices using Flutter technology for cross-platform purpose.'
-          '\n• Implemented new UI and features for over 10K+ users.'
-          '\n• Used BLoC design pattern as the foundation of development process.'
-          '\n• Wrote Flutter unit tests to ensure the functionality of the WiZ V2 app.'
-          '\n• Experienced with RESTful API concepts and SQLite database.'
-          '\n• Involved in an agile development environment with different teams for sprint planning, refinement, grooming, and daily stand-up meetings.'),
+    5,
+    DateTime(2022, 1),
+    DateTime(2023, 1),
+    'Mobile Development Engineer',
+    subtitle: 'Signify',
+    shortDescription: 'Flutter, Dart',
+    longDescription:
+        '• Revamped the original WiZ app that controls WiZ Connected smart devices using Flutter technology for cross-platform purpose.'
+        '\n• Implemented new UI and features for over 10K+ users.'
+        '\n• Used BLoC design pattern as the foundation of development process.'
+        '\n• Wrote Flutter unit tests to ensure the functionality of the WiZ V2 app.'
+        '\n• Experienced with RESTful API concepts and SQLite database.'
+        '\n• Involved in an agile development environment with different teams for sprint planning, refinement, grooming, and daily stand-up meetings.',
+  ),
 ];
