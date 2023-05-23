@@ -28,7 +28,7 @@ Future<void> main() async {
     debugPrint('failed to get analytics instance');
   }
 
-  final List<NavigatorObserver> navigatorObservers = [HeroController()];
+  final List<NavigatorObserver> navigatorObservers = [];
 
   if (analyticsInstance != null) {
     FirebaseAnalyticsObserver observer =

@@ -5,6 +5,7 @@ import 'package:my_flutter_website/beam_locations/app_path.dart';
 import 'package:my_flutter_website/beam_locations/experience_location.dart';
 import 'package:my_flutter_website/beam_locations/home_location.dart';
 import 'package:my_flutter_website/enum/nav_bar_type.dart';
+import 'package:my_flutter_website/widgets/app_dock.dart';
 
 class AppScreen extends StatelessWidget {
   final _beamerKey = GlobalKey<BeamerState>();
@@ -15,7 +16,7 @@ class AppScreen extends StatelessWidget {
 
   AppScreen({super.key, this.navigatorObservers = const <NavigatorObserver>[]})
       : _routerDelegate = BeamerDelegate(
-          navigatorObservers: navigatorObservers,
+          navigatorObservers: [HeroController(), ...navigatorObservers],
           transitionDelegate: const NoAnimationTransitionDelegate(),
           locationBuilder: BeamerLocationBuilder(
             beamLocations: [
@@ -56,6 +57,10 @@ class AppScreen extends StatelessWidget {
           ],
         ),
         bottomNavigationBar: null,
+        floatingActionButton: AppDock(
+          beamerKey: _beamerKey,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );
     });
   }
