@@ -1,6 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:conway_game_of_life/game_board.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_flutter_website/bloc/analytics_bloc.dart';
@@ -69,52 +68,37 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
               screenPadding = const EdgeInsets.all(20);
           }
 
-          return Stack(
-            children: [
-              // Opacity(
-              //   opacity: 0.3,
-              //   child: GameBoard(
-              //     height: height,
-              //     width: width,
-              //     cellSize: 7,
-              //     duration: const Duration(milliseconds: 500),
-              //     shouldAutoStart: true,
-              //     showControlPanel: false,
-              //   ),
-              // ),
-              BlocBuilder<MyHomePageBloc, MyHomePageState>(
-                builder: (context, state) {
-                  if (state is MyHomePageInitial ||
-                      state is HomePageWelcomeGreetingSuccess) {
-                    return _AnimatedGreetingSentenceWidget(
-                      screenSizeType: screenSizeType,
-                      height: height,
-                      width: width,
-                      shouldMove: state is HomePageWelcomeGreetingSuccess,
-                      shouldShow: state is MyHomePageInitial,
-                      welcomeGreetingTextSize: welcomeGreetingTextSize,
-                      padding: screenPadding,
-                    );
-                  }
+          return BlocBuilder<MyHomePageBloc, MyHomePageState>(
+            builder: (context, state) {
+              if (state is MyHomePageInitial ||
+                  state is HomePageWelcomeGreetingSuccess) {
+                return _AnimatedGreetingSentenceWidget(
+                  screenSizeType: screenSizeType,
+                  height: height,
+                  width: width,
+                  shouldMove: state is HomePageWelcomeGreetingSuccess,
+                  shouldShow: state is MyHomePageInitial,
+                  welcomeGreetingTextSize: welcomeGreetingTextSize,
+                  padding: screenPadding,
+                );
+              }
 
-                  if (screenSizeType == ScreenSizeType.big ||
-                      screenSizeType == ScreenSizeType.medium) {
-                    return _LargeScreenContent(
-                      height: height,
-                      width: width,
-                      welcomeGreetingTextSize: welcomeGreetingTextSize,
-                      padding: screenPadding,
-                    );
-                  }
+              if (screenSizeType == ScreenSizeType.big ||
+                  screenSizeType == ScreenSizeType.medium) {
+                return _LargeScreenContent(
+                  height: height,
+                  width: width,
+                  welcomeGreetingTextSize: welcomeGreetingTextSize,
+                  padding: screenPadding,
+                );
+              }
 
-                  /// should be small or medium screens.
-                  return _SmallScreenContent(
-                    padding: screenPadding,
-                    welcomeGreetingTextSize: welcomeGreetingTextSize,
-                  );
-                },
-              )
-            ],
+              /// should be small or medium screens.
+              return _SmallScreenContent(
+                padding: screenPadding,
+                welcomeGreetingTextSize: welcomeGreetingTextSize,
+              );
+            },
           );
         },
       ),
