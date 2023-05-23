@@ -1,6 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 
-class TimelineEventModel implements Comparable<TimelineEventModel> {
+class TimelineEventModel extends Equatable
+    implements Comparable<TimelineEventModel> {
+  final int id;
   final DateTime startDate;
   final DateTime endDate;
   final String title;
@@ -10,7 +13,8 @@ class TimelineEventModel implements Comparable<TimelineEventModel> {
   final Widget? timelineDotWidget;
   final Widget? icon;
 
-  TimelineEventModel(
+  const TimelineEventModel(
+    this.id,
     this.startDate,
     this.endDate,
     this.title, {
@@ -25,4 +29,17 @@ class TimelineEventModel implements Comparable<TimelineEventModel> {
   int compareTo(TimelineEventModel other) {
     return startDate.compareTo(other.startDate);
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        startDate,
+        endDate,
+        title,
+        subtitle,
+        shortDescription,
+        longDescription,
+        timelineDotWidget,
+        icon,
+      ];
 }
