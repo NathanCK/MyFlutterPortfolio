@@ -5,12 +5,9 @@ import 'package:my_flutter_website/utils/date_time_utils.dart';
 class TimelineCard extends StatelessWidget {
   final TimelineEventModel data;
 
-  final void Function()? onTapIndexed;
-
   const TimelineCard({
     super.key,
     required this.data,
-    this.onTapIndexed,
   });
 
   @override
