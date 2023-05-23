@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart';
+import 'package:conway_game_of_life/game_board.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_website/beam_locations/app_path.dart';
 import 'package:my_flutter_website/beam_locations/experience_location.dart';
@@ -35,6 +36,17 @@ class AppScreen extends StatelessWidget {
           children: [
             Expanded(
               child: Stack(children: [
+                Opacity(
+                  opacity: 0.3,
+                  child: GameBoard(
+                    height: boxConstraints.maxHeight,
+                    width: boxConstraints.maxWidth,
+                    cellSize: 7,
+                    duration: const Duration(milliseconds: 500),
+                    shouldAutoStart: true,
+                    showControlPanel: false,
+                  ),
+                ),
                 Beamer(
                   key: _beamerKey,
                   routerDelegate: _routerDelegate,
