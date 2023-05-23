@@ -28,7 +28,7 @@ Future<void> main() async {
     debugPrint('failed to get analytics instance');
   }
 
-  final List<NavigatorObserver> navigatorObservers = [];
+  final List<NavigatorObserver> navigatorObservers = [HeroController()];
 
   if (analyticsInstance != null) {
     FirebaseAnalyticsObserver observer =
@@ -41,7 +41,7 @@ Future<void> main() async {
     initialPath: '/home',
     locationBuilder: RoutesLocationBuilder(
       routes: {
-        AppPath.home: (context, state, data) =>
+        '*': (context, state, data) =>
             AppScreen(navigatorObservers: navigatorObservers),
       },
     ),
