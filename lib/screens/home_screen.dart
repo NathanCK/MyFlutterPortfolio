@@ -44,6 +44,7 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
         TextUtils.calculateTextSize('Hello world !', style: titleStyle);
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: LayoutBuilder(
         builder: (buildContext, boxConstraints) {
           final width = boxConstraints.maxWidth;
@@ -70,17 +71,17 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
 
           return Stack(
             children: [
-              Opacity(
-                opacity: 0.3,
-                child: GameBoard(
-                  height: height,
-                  width: width,
-                  cellSize: 7,
-                  duration: const Duration(milliseconds: 500),
-                  shouldAutoStart: true,
-                  showControlPanel: false,
-                ),
-              ),
+              // Opacity(
+              //   opacity: 0.3,
+              //   child: GameBoard(
+              //     height: height,
+              //     width: width,
+              //     cellSize: 7,
+              //     duration: const Duration(milliseconds: 500),
+              //     shouldAutoStart: true,
+              //     showControlPanel: false,
+              //   ),
+              // ),
               BlocBuilder<MyHomePageBloc, MyHomePageState>(
                 builder: (context, state) {
                   if (state is MyHomePageInitial ||
