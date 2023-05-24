@@ -90,3 +90,32 @@ class DisplaySmallText extends ThemedText {
     );
   }
 }
+
+class BodyLargeText extends ThemedText {
+  final TextAlign? textAlign;
+  final int? maxLines;
+  final TextOverflow? overflow;
+  final double maxFontSize;
+  final double stepGranularity;
+
+  const BodyLargeText(super.text,
+      {this.textAlign,
+      this.maxLines,
+      this.overflow,
+      this.maxFontSize = double.infinity,
+      this.stepGranularity = 1,
+      super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final titleStyle = Theme.of(context).primaryTextTheme.bodyLarge!;
+    return AutoSizeText(
+      text,
+      style: titleStyle.copyWith(overflow: overflow),
+      textAlign: textAlign,
+      maxLines: maxLines,
+      maxFontSize: maxFontSize,
+      stepGranularity: stepGranularity,
+    );
+  }
+}
