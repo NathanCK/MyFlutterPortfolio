@@ -17,7 +17,6 @@ class AppScreen extends StatelessWidget {
   AppScreen({super.key, this.navigatorObservers = const <NavigatorObserver>[]})
       : _routerDelegate = BeamerDelegate(
           navigatorObservers: [HeroController(), ...navigatorObservers],
-          transitionDelegate: const NoAnimationTransitionDelegate(),
           locationBuilder: BeamerLocationBuilder(
             beamLocations: [
               HomeLocation(),
