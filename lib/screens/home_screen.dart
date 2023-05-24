@@ -38,7 +38,7 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = Theme.of(context).primaryTextTheme.titleLarge!;
+    final titleStyle = Theme.of(context).primaryTextTheme.displayLarge!;
     final welcomeGreetingTextSize =
         TextUtils.calculateTextSize('Hello world !', style: titleStyle);
 
@@ -171,7 +171,7 @@ class _SmallScreenContent extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: nameWidth,
-                    child: const TitleText(
+                    child: const DisplayLargeText(
                       'Kin (Nathan) Chan',
                       textAlign: TextAlign.center,
                       maxFontSize: 32,
@@ -187,9 +187,9 @@ class _SmallScreenContent extends StatelessWidget {
               )
             ],
           ),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               SizedBox(
                 height: 8,
               ),
@@ -251,7 +251,7 @@ class _LargeScreenContent extends StatelessWidget {
                                 height: welcomeGreetingTextSize.height,
                                 child: const Align(
                                     alignment: Alignment.bottomLeft,
-                                    child: TitleText('Hello world !')),
+                                    child: DisplayLargeText('Hello world !')),
                               ),
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -265,11 +265,11 @@ class _LargeScreenContent extends StatelessWidget {
                           flex: 1,
                           child: SizedBox.shrink(),
                         ),
-                        Expanded(
+                        const Expanded(
                           flex: 6,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               _MyLargePhotoWidget(),
                             ],
                           ),
@@ -306,7 +306,7 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = Theme.of(context).primaryTextTheme.titleLarge!;
+    final titleStyle = Theme.of(context).primaryTextTheme.displayLarge!;
     double top;
     double left;
 
