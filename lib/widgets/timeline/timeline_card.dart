@@ -20,12 +20,8 @@ class TimelineCard extends StatelessWidget {
         if (data.icon != null)
           Center(
             child: SizedBox(
-              width: 100,
               height: 100,
-              child: FittedBox(
-                fit: BoxFit.fill,
-                child: data.icon!,
-              ),
+              child: data.icon!,
             ),
           ),
         Text(data.title),
