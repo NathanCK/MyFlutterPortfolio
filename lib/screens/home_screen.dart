@@ -1,5 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_flutter_website/bloc/analytics_bloc.dart';
@@ -38,9 +37,7 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = Theme.of(context).primaryTextTheme.displayLarge!;
-    final welcomeGreetingTextSize =
-        TextUtils.calculateTextSize('Hello world !', style: titleStyle);
+    final themeData = Theme.of(context);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -52,21 +49,31 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
           final screenSizeType =
               _getScreenSizeType(screenHeight: height, screenWidth: width);
 
+          final TextStyle welcomeGreetingTextStyle;
+
           EdgeInsetsGeometry screenPadding;
           switch (screenSizeType) {
             case ScreenSizeType.big:
+              welcomeGreetingTextStyle = themeData.textTheme.displayLarge!;
               screenPadding = const EdgeInsets.all(50);
               break;
             case ScreenSizeType.medium:
+              welcomeGreetingTextStyle = themeData.textTheme.displayMedium!;
               screenPadding = const EdgeInsets.fromLTRB(20, 50, 20, 20);
               break;
             case ScreenSizeType.small:
+              welcomeGreetingTextStyle = themeData.textTheme.headlineSmall!;
               screenPadding =
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 20);
+                  const EdgeInsets.symmetric(horizontal: 30, vertical: 50);
               break;
             default:
+              welcomeGreetingTextStyle = themeData.textTheme.displaySmall!;
               screenPadding = const EdgeInsets.all(20);
           }
+
+          final Size welcomeGreetingTextSize = TextUtils.calculateTextSize(
+              'Hello world !',
+              style: welcomeGreetingTextStyle);
 
           return BlocBuilder<MyHomePageBloc, MyHomePageState>(
             builder: (context, state) {
@@ -306,7 +313,24 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = Theme.of(context).primaryTextTheme.displayLarge!;
+    final themeData = Theme.of(context);
+
+    TextStyle titleStyle;
+
+    switch (screenSizeType) {
+      case ScreenSizeType.big:
+        titleStyle = themeData.textTheme.displayLarge!;
+        break;
+      case ScreenSizeType.medium:
+        titleStyle = themeData.textTheme.displayMedium!;
+        break;
+      case ScreenSizeType.small:
+        titleStyle = themeData.textTheme.headlineSmall!;
+        break;
+      default:
+        titleStyle = themeData.textTheme.displaySmall!;
+    }
+
     double top;
     double left;
 
@@ -361,14 +385,10 @@ class _IntroductionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AutoSizeText(
+    return BodyLargeText(
       S.of(context).home_page_intro_statement,
       overflow: TextOverflow.ellipsis,
       textAlign: TextAlign.justify,
-      style: const TextStyle(
-        fontSize: 18.0,
-        fontWeight: FontWeight.bold,
-      ),
       maxLines: 15,
       stepGranularity: 0.1,
     );
