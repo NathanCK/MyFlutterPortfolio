@@ -37,12 +37,8 @@ class SelectedTimelineCard extends StatelessWidget {
               if (data.icon != null)
                 Center(
                   child: SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: FittedBox(
-                      fit: BoxFit.fill,
-                      child: data.icon!,
-                    ),
+                    height: 200,
+                    child: data.icon!,
                   ),
                 ),
               Text(
