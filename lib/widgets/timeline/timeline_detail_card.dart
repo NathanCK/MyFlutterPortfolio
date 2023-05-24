@@ -20,44 +20,38 @@ class SelectedTimelineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: data.title,
-      child: Material(
-        type: MaterialType.transparency,
-        child: Container(
-          width: width,
-          padding: padding,
-          margin: margin,
-          decoration: decoration,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (data.icon != null)
-                Center(
-                  child: SizedBox(
-                    height: 200,
-                    child: data.icon!,
-                  ),
-                ),
-              Text(
-                data.title,
+    return Container(
+      width: width,
+      padding: padding,
+      margin: margin,
+      decoration: decoration,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (data.icon != null)
+            Center(
+              child: SizedBox(
+                height: 200,
+                child: data.icon!,
               ),
-              if (data.subtitle != null)
-                Text(
-                  data.subtitle!,
-                ),
-              Text(
-                '${data.startDate.toStringMY()} - ${data.endDate.toStringMY()}',
-              ),
-              if (data.longDescription != null)
-                Text(
-                  data.longDescription!,
-                ),
-            ],
+            ),
+          Text(
+            data.title,
           ),
-        ),
+          if (data.subtitle != null)
+            Text(
+              data.subtitle!,
+            ),
+          Text(
+            '${data.startDate.toStringMY()} - ${data.endDate.toStringMY()}',
+          ),
+          if (data.longDescription != null)
+            Text(
+              data.longDescription!,
+            ),
+        ],
       ),
     );
   }
