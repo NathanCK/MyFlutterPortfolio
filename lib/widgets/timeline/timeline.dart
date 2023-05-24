@@ -95,7 +95,8 @@ class _TimelineState extends State<Timeline> {
                         final Widget card = widget.cardBuilder(context, index);
 
                         final Widget outerCard = Hero(
-                          tag: widget.timelineDataList[index].title,
+                          tag:
+                              'hero_tag_for_timeline_event_id:${widget.timelineDataList[index].id}',
                           child: Material(
                             type: MaterialType.transparency,
                             child: Container(
