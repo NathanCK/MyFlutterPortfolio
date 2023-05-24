@@ -20,14 +20,19 @@ class ExperienceDetailPage extends StatelessWidget {
           create: (context) => ExperienceDetailBloc(id: id),
         ),
       ],
-      child: _ExperienceDetailPageContent(),
+      child: _ExperienceDetailPageContent(id: id),
     );
   }
 }
 
 class _ExperienceDetailPageContent extends StatelessWidget {
+  final int id;
+
+  const _ExperienceDetailPageContent({super.key, required this.id});
+
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<ExperienceDetailBloc>();
     return Scaffold(
       backgroundColor: const Color.fromARGB(112, 158, 158, 158),
       body: Stack(
@@ -37,35 +42,41 @@ class _ExperienceDetailPageContent extends StatelessWidget {
               Beamer.of(context).popToNamed(AppPath.experience);
             },
           ),
-          BlocBuilder<ExperienceDetailBloc, ExperienceDetailState>(
-            builder: (context, state) {
-              if (state is ExperienceDetailLoadSuccess) {
-                return Center(
-                  child: SelectedTimelineCard(
-                    data: state.data,
-                    width: 400,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: const Color.fromARGB(255, 219, 202, 202),
-                      border: Border.all(width: 1),
+          Hero(
+            tag: 'hero_tag_for_timeline_event_id:$id',
+            child: BlocBuilder<ExperienceDetailBloc, ExperienceDetailState>(
+              bloc: bloc,
+              builder: (context, state) {
+                if (state is ExperienceDetailLoadSuccess) {
+                  return Center(
+                    child: SelectedTimelineCard(
+                      data: state.data,
+                      width: 400,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        color: const Color.fromARGB(255, 219, 202, 202),
+                        border: Border.all(width: 1),
+                      ),
+                      margin:
+                          const EdgeInsets.only(left: 8, right: 8, bottom: 2),
+                      padding: const EdgeInsets.all(8),
                     ),
-                    margin: const EdgeInsets.only(left: 8, right: 8, bottom: 2),
-                    padding: const EdgeInsets.all(8),
-                  ),
-                );
-              }
+                  );
+                }
 
-              if (state is ExperienceDetailLoadFailed) {
+                if (state is ExperienceDetailLoadFailed) {
+                  return const Center(
+                    child: Text('failed to load the data'),
+                  );
+                }
+
                 return const Center(
-                  child: Text('failed to load the data'),
+                  child: CircularProgressIndicator(),
                 );
-              }
-
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
+              },
+            ),
           )
         ],
       ),
