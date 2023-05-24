@@ -28,7 +28,6 @@ final timelineEventModels = [
         '• Designed, implemented, and refined prototypes for a multitude of unique user interfaces, inspiring action around the results.'
         '\n• Used technology to solve straightforward user interface and UX problems, seeking input and guidance from team members.'
         '\n• Turned a defined software and UX design into code, and delivered it on schedule using languages, libraries, and rendering technologies (e.g. JavaScript, Node.js, Angular, HTML, CSS).',
-    timelineDotWidget: const Icon(Icons.work),
     icon: const Image(image: AssetImage('icons/DeFiner_icon.png')),
   ),
   TimelineEventModel(
