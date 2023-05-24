@@ -41,11 +41,13 @@ class _TimelineState extends State<Timeline> {
 
   @override
   void initState() {
-    _scrollController = ScrollController();
     super.initState();
+    _scrollController = ScrollController();
+    WidgetsBinding.instance
+        .addPostFrameCallback((timeStamp) => _jumpToIndex(0));
   }
 
-  Future<void> _onTapIndex(int index) async {
+  Future<void> _jumpToIndex(int index) async {
     double scrollToOffset = (index) * (widget.settings.eventItemWidth) +
         (widget.settings.eventItemWidth / 2);
 
@@ -55,15 +57,17 @@ class _TimelineState extends State<Timeline> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final TextStyle monthTextStyle =
-        widget.settings.monthTextStyle ?? _defaultMonthTextStyle;
-    final TextStyle yearTextStyle =
-        widget.settings.yearTextStyle ?? _defaultYearTextStyle;
+    final themeData = Theme.of(context);
+    final TextStyle monthTextStyle = widget.settings.monthTextStyle ??
+        themeData.textTheme.labelMedium ??
+        _defaultMonthTextStyle;
+    final TextStyle yearTextStyle = widget.settings.yearTextStyle ??
+        themeData.textTheme.labelLarge ??
+        _defaultYearTextStyle;
 
     return Center(
       child: SizedBox(
-        height: screenSize.height / 2,
+        height: 550, // TODO: should dynamically change the height.
         child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(dragDevices: {
               PointerDeviceKind.touch,
@@ -100,7 +104,7 @@ class _TimelineState extends State<Timeline> {
                               margin: widget.cardMargin,
                               child: InkWell(
                                 onTap: () async {
-                                  await _onTapIndex(index);
+                                  await _jumpToIndex(index);
                                   if (widget.onCardTap != null && mounted) {
                                     widget.onCardTap!(context, index);
                                   }
