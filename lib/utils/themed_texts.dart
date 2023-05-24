@@ -13,13 +13,13 @@ abstract class ThemedText extends StatelessWidget {
   }
 }
 
-class TitleText extends ThemedText {
+class DisplayLargeText extends ThemedText {
   final TextAlign? textAlign;
   final int? maxLines;
   final TextOverflow? overflow;
   final double maxFontSize;
 
-  const TitleText(super.text,
+  const DisplayLargeText(super.text,
       {this.textAlign,
       this.maxLines,
       this.overflow,
@@ -28,7 +28,59 @@ class TitleText extends ThemedText {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = Theme.of(context).primaryTextTheme.titleLarge!;
+    final titleStyle = Theme.of(context).primaryTextTheme.displayLarge!;
+    return AutoSizeText(
+      text,
+      style: titleStyle.copyWith(overflow: overflow),
+      textAlign: textAlign,
+      maxLines: maxLines,
+      maxFontSize: maxFontSize,
+    );
+  }
+}
+
+class DisplayMediumText extends ThemedText {
+  final TextAlign? textAlign;
+  final int? maxLines;
+  final TextOverflow? overflow;
+  final double maxFontSize;
+
+  const DisplayMediumText(super.text,
+      {this.textAlign,
+      this.maxLines,
+      this.overflow,
+      this.maxFontSize = double.infinity,
+      super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final titleStyle = Theme.of(context).primaryTextTheme.displayMedium!;
+    return AutoSizeText(
+      text,
+      style: titleStyle.copyWith(overflow: overflow),
+      textAlign: textAlign,
+      maxLines: maxLines,
+      maxFontSize: maxFontSize,
+    );
+  }
+}
+
+class DisplaySmallText extends ThemedText {
+  final TextAlign? textAlign;
+  final int? maxLines;
+  final TextOverflow? overflow;
+  final double maxFontSize;
+
+  const DisplaySmallText(super.text,
+      {this.textAlign,
+      this.maxLines,
+      this.overflow,
+      this.maxFontSize = double.infinity,
+      super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final titleStyle = Theme.of(context).primaryTextTheme.displaySmall!;
     return AutoSizeText(
       text,
       style: titleStyle.copyWith(overflow: overflow),
