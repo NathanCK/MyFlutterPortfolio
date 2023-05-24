@@ -5,6 +5,8 @@ import 'package:my_flutter_website/utils/date_time_utils.dart';
 import 'package:my_flutter_website/utils/themed_texts.dart';
 
 class TimelineCard extends StatelessWidget {
+  static const SizedBox _defaultSpace = SizedBox(height: 8);
+
   final TimelineEventModel data;
   final ScreenSizeType? screenSizeType;
 
@@ -28,7 +30,7 @@ class TimelineCard extends StatelessWidget {
             '${data.startDate.toStringMY()} - ${data.endDate.toStringMY()}');
         if (data.subtitle != null) subTitle = TitleLargeText(data.subtitle!);
         if (data.shortDescription != null) {
-          shortDescription = BodyLargeText(data.subtitle!);
+          shortDescription = BodyLargeText(data.shortDescription!);
         }
         break;
       case ScreenSizeType.medium:
@@ -37,7 +39,7 @@ class TimelineCard extends StatelessWidget {
         date = LabelMediumText(
             '${data.startDate.toStringMY()} - ${data.endDate.toStringMY()}');
         if (data.shortDescription != null) {
-          shortDescription = BodyMediumText(data.subtitle!);
+          shortDescription = BodyMediumText(data.shortDescription!);
         }
         break;
       case null:
@@ -48,7 +50,7 @@ class TimelineCard extends StatelessWidget {
             '${data.startDate.toStringMY()} - ${data.endDate.toStringMY()}');
         if (data.subtitle != null) subTitle = TitleSmallText(data.subtitle!);
         if (data.shortDescription != null) {
-          shortDescription = BodySmallText(data.subtitle!);
+          shortDescription = BodySmallText(data.shortDescription!);
         }
     }
 
@@ -64,10 +66,15 @@ class TimelineCard extends StatelessWidget {
               child: data.icon!,
             ),
           ),
+        _defaultSpace,
         title,
         if (subTitle != null) subTitle,
         date,
-        if (shortDescription != null) shortDescription,
+        _defaultSpace,
+        if (shortDescription != null) ...[
+          shortDescription,
+          _defaultSpace,
+        ],
       ],
     );
   }
