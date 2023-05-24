@@ -37,8 +37,6 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeData = Theme.of(context);
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: LayoutBuilder(
@@ -49,31 +47,21 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
           final screenSizeType =
               _getScreenSizeType(screenHeight: height, screenWidth: width);
 
-          final TextStyle welcomeGreetingTextStyle;
-
           EdgeInsetsGeometry screenPadding;
           switch (screenSizeType) {
             case ScreenSizeType.big:
-              welcomeGreetingTextStyle = themeData.textTheme.displayLarge!;
               screenPadding = const EdgeInsets.all(50);
               break;
             case ScreenSizeType.medium:
-              welcomeGreetingTextStyle = themeData.textTheme.displayMedium!;
               screenPadding = const EdgeInsets.fromLTRB(20, 50, 20, 20);
               break;
             case ScreenSizeType.small:
-              welcomeGreetingTextStyle = themeData.textTheme.headlineSmall!;
               screenPadding =
                   const EdgeInsets.symmetric(horizontal: 30, vertical: 50);
               break;
             default:
-              welcomeGreetingTextStyle = themeData.textTheme.displaySmall!;
               screenPadding = const EdgeInsets.all(20);
           }
-
-          final Size welcomeGreetingTextSize = TextUtils.calculateTextSize(
-              'Hello world !',
-              style: welcomeGreetingTextStyle);
 
           return BlocBuilder<MyHomePageBloc, MyHomePageState>(
             builder: (context, state) {
@@ -85,7 +73,6 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                   width: width,
                   shouldMove: state is HomePageWelcomeGreetingSuccess,
                   shouldShow: state is MyHomePageInitial,
-                  welcomeGreetingTextSize: welcomeGreetingTextSize,
                   padding: screenPadding,
                 );
               }
@@ -95,7 +82,6 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                 return _LargeScreenContent(
                   height: height,
                   width: width,
-                  welcomeGreetingTextSize: welcomeGreetingTextSize,
                   padding: screenPadding,
                 );
               }
@@ -103,7 +89,6 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
               /// should be small or medium screens.
               return _SmallScreenContent(
                 padding: screenPadding,
-                welcomeGreetingTextSize: welcomeGreetingTextSize,
               );
             },
           );
@@ -130,13 +115,11 @@ class _SmallScreenContent extends StatelessWidget {
   static const double _iconAndInfoSpacing = 16;
   static const double _photoSize = 32;
   static const double _photoBorderRadius = 4;
-  final Size welcomeGreetingTextSize;
   final EdgeInsetsGeometry padding;
   final double horizontalPadding;
   final double verticalPadding;
 
   _SmallScreenContent({
-    required this.welcomeGreetingTextSize,
     required this.padding,
   })  : horizontalPadding = padding.horizontal / 2,
         verticalPadding = padding.vertical / 2;
@@ -219,7 +202,6 @@ class _SmallScreenContent extends StatelessWidget {
 class _LargeScreenContent extends StatelessWidget {
   final double height;
   final double width;
-  final Size welcomeGreetingTextSize;
   final EdgeInsetsGeometry padding;
   final double horizontalPadding;
   final double verticalPadding;
@@ -227,13 +209,17 @@ class _LargeScreenContent extends StatelessWidget {
   _LargeScreenContent({
     required this.height,
     required this.width,
-    required this.welcomeGreetingTextSize,
     required this.padding,
   })  : horizontalPadding = padding.horizontal / 2,
         verticalPadding = padding.vertical / 2;
 
   @override
   Widget build(BuildContext context) {
+    final welcomeGreetingTextStyle = Theme.of(context).textTheme.displayLarge!;
+    final Size welcomeGreetingTextSize = TextUtils.calculateTextSize(
+        'Hello world !',
+        style: welcomeGreetingTextStyle);
+
     return Center(
       child: TweenAnimationBuilder(
           tween: Tween<double>(begin: 0.0, end: 1.0),
@@ -298,14 +284,12 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
   final double height;
   final double width;
   final EdgeInsetsGeometry padding;
-  final Size welcomeGreetingTextSize;
   final ScreenSizeType screenSizeType;
 
   const _AnimatedGreetingSentenceWidget({
     required this.height,
     required this.width,
     required this.padding,
-    required this.welcomeGreetingTextSize,
     required this.screenSizeType,
     required this.shouldMove,
     required this.shouldShow,
@@ -330,6 +314,9 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
       default:
         titleStyle = themeData.textTheme.displaySmall!;
     }
+
+    final Size welcomeGreetingTextSize =
+        TextUtils.calculateTextSize('Hello world !', style: titleStyle);
 
     double top;
     double left;
