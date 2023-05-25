@@ -20,6 +20,13 @@ class ExperienceLocation extends BeamLocation<BeamState> {
         BeamPage(
           key: ValueKey('experienceId-$id'),
           child: ExperienceDetailPage(id: id),
+          routeBuilder: (context, settings, child) {
+            return PageRouteBuilder(
+              settings: settings,
+              opaque: false,
+              pageBuilder: (_, __, ___) => child,
+            );
+          },
         ),
       );
     }
