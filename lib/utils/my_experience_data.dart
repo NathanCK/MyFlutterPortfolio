@@ -15,7 +15,7 @@ final timelineEventModels = [
     timelineDotWidget: const Icon(
       Icons.book,
     ),
-    icon: const Image(image: AssetImage('icons/umn_goldy_icon.png')),
+    icon: const Image(image: AssetImage('assets/icons/umn_goldy_icon.png')),
   ),
   TimelineEventModel(
     2,
@@ -28,7 +28,7 @@ final timelineEventModels = [
         '• Designed, implemented, and refined prototypes for a multitude of unique user interfaces, inspiring action around the results.'
         '\n• Used technology to solve straightforward user interface and UX problems, seeking input and guidance from team members.'
         '\n• Turned a defined software and UX design into code, and delivered it on schedule using languages, libraries, and rendering technologies (e.g. JavaScript, Node.js, Angular, HTML, CSS).',
-    icon: const Image(image: AssetImage('icons/DeFiner_icon.png')),
+    icon: const Image(image: AssetImage('assets/icons/DeFiner_icon.png')),
   ),
   TimelineEventModel(
     3,
@@ -44,7 +44,7 @@ final timelineEventModels = [
         '\n• Wrote back-end unit tests and create a test program to ensure the functionality and correctness of the application using NUnit.'
         '\n• Used Microsoft SQL Server to consume data from and insert data rows into SQL database tables in the application.'
         '\n• Managed asynchronous work using TFS for version controlling.',
-    icon: const Image(image: AssetImage('icons/OATI_icon.png')),
+    icon: const Image(image: AssetImage('assets/icons/OATI_icon.png')),
   ),
   TimelineEventModel(
     4,
@@ -75,6 +75,6 @@ final timelineEventModels = [
         '\n• Wrote Flutter unit tests to ensure the functionality of the WiZ V2 app.'
         '\n• Experienced with RESTful API concepts and SQLite database.'
         '\n• Involved in an agile development environment with different teams for sprint planning, refinement, grooming, and daily stand-up meetings.',
-    icon: const Image(image: AssetImage('icons/Signify_icon.png')),
+    icon: const Image(image: AssetImage('assets/icons/Signify_icon.png')),
   ),
 ];
