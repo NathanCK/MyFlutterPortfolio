@@ -12,7 +12,7 @@ class AnalyticsBloc extends Bloc<AnalyticsEvent, AnalyticsState> {
   FirebaseAnalytics? _analyticsInstance;
 
   AnalyticsBloc() : super(AnalyticsInitial()) {
-    on<AnalyticsEvent>(_onAnalyticsInitialized);
+    on<AnalyticsInitialized>(_onAnalyticsInitialized);
     on<AnalyticsOutLinkButtonPressed>(_onAnalyticsOutLinkButtonPressed);
 
     add(AnalyticsInitialized());

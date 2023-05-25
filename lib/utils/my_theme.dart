@@ -120,11 +120,61 @@ final lightTheme = ThemeData.light(
   useMaterial3: true,
 ).copyWith(
   primaryTextTheme: TextTheme(
-      titleLarge: GoogleFonts.openSans(
-    color: Colors.black,
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
-  )),
+    displayLarge: GoogleFonts.aBeeZee(
+        fontSize: 97, fontWeight: FontWeight.w300, letterSpacing: -1.5),
+    displayMedium: GoogleFonts.aBeeZee(
+        fontSize: 61, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+    displaySmall:
+        GoogleFonts.aBeeZee(fontSize: 48, fontWeight: FontWeight.w400),
+    headlineMedium: GoogleFonts.aBeeZee(
+        fontSize: 34, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+    headlineSmall:
+        GoogleFonts.aBeeZee(fontSize: 24, fontWeight: FontWeight.w400),
+    titleLarge: GoogleFonts.aBeeZee(
+        fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
+    titleMedium: GoogleFonts.aBeeZee(
+        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
+    titleSmall: GoogleFonts.aBeeZee(
+        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
+    bodyLarge: GoogleFonts.poppins(
+        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
+    bodyMedium: GoogleFonts.poppins(
+        fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+    labelLarge: GoogleFonts.poppins(
+        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
+    bodySmall: GoogleFonts.poppins(
+        fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
+    labelSmall: GoogleFonts.poppins(
+        fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+  ),
+  textTheme: TextTheme(
+    displayLarge: GoogleFonts.aBeeZee(
+        fontSize: 97, fontWeight: FontWeight.w300, letterSpacing: -1.5),
+    displayMedium: GoogleFonts.aBeeZee(
+        fontSize: 61, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+    displaySmall:
+        GoogleFonts.aBeeZee(fontSize: 48, fontWeight: FontWeight.w400),
+    headlineMedium: GoogleFonts.aBeeZee(
+        fontSize: 34, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+    headlineSmall:
+        GoogleFonts.aBeeZee(fontSize: 24, fontWeight: FontWeight.w400),
+    titleLarge: GoogleFonts.aBeeZee(
+        fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
+    titleMedium: GoogleFonts.aBeeZee(
+        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
+    titleSmall: GoogleFonts.aBeeZee(
+        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
+    bodyLarge: GoogleFonts.poppins(
+        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
+    bodyMedium: GoogleFonts.poppins(
+        fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+    labelLarge: GoogleFonts.poppins(
+        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
+    bodySmall: GoogleFonts.poppins(
+        fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
+    labelSmall: GoogleFonts.poppins(
+        fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+  ),
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
   iconButtonTheme: IconButtonThemeData(
@@ -132,5 +182,4 @@ final lightTheme = ThemeData.light(
       highlightColor: Colors.transparent,
     ),
   ),
-  textTheme: TextTheme(bodyLarge: GoogleFonts.openSans(color: Colors.black)),
 );

@@ -41,7 +41,7 @@ Future<void> main() async {
     initialPath: '/home',
     locationBuilder: RoutesLocationBuilder(
       routes: {
-        AppPath.home: (context, state, data) =>
+        '*': (context, state, data) =>
             AppScreen(navigatorObservers: navigatorObservers),
       },
     ),
