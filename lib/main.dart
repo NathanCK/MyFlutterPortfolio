@@ -8,8 +8,6 @@ import 'package:my_flutter_website/generated/l10n.dart';
 import 'package:my_flutter_website/screens/app_screen.dart';
 import 'package:my_flutter_website/utils/my_theme.dart';
 
-import 'beam_locations/home_location.dart';
-
 void main() {
   final AppStatusBloc appStatusBloc = AppStatusBloc();
   // Beamer.setPathUrlStrategy(); // Github Pages doesn't support that for now
