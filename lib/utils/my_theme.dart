@@ -52,15 +52,15 @@ final MyDrawerTheme myDrawerLightTheme = MyDrawerTheme(
   buttonSelectedIndicatorColor: const Color(0xFF0dd83d),
   buttonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      iconColor: const MaterialStatePropertyAll(Colors.white),
-      backgroundColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected) ||
-            states.contains(MaterialState.hovered)) {
+      iconColor: const WidgetStatePropertyAll(Colors.white),
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected) ||
+            states.contains(WidgetState.hovered)) {
           return const Color(0xFF363b41);
         }
         return const Color(0xFF1c2229);
       }),
-      padding: const MaterialStatePropertyAll(EdgeInsets.all(8)),
+      padding: const WidgetStatePropertyAll(EdgeInsets.all(8)),
     ),
   ),
   labelStyle: GoogleFonts.openSans(
