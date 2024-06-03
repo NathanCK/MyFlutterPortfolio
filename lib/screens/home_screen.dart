@@ -1,7 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_flutter_website/bloc/analytics_bloc.dart';
 import 'package:my_flutter_website/bloc/my_home_page_bloc.dart';
 import 'package:my_flutter_website/enum/external_profile_type.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
@@ -37,11 +37,8 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = Theme.of(context).primaryTextTheme.titleLarge!;
-    final welcomeGreetingTextSize =
-        TextUtils.calculateTextSize('Hello world !', style: titleStyle);
-
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: LayoutBuilder(
         builder: (buildContext, boxConstraints) {
           final width = boxConstraints.maxWidth;
@@ -60,7 +57,7 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
               break;
             case ScreenSizeType.small:
               screenPadding =
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 20);
+                  const EdgeInsets.symmetric(horizontal: 30, vertical: 50);
               break;
             default:
               screenPadding = const EdgeInsets.all(20);
@@ -76,7 +73,6 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                   width: width,
                   shouldMove: state is HomePageWelcomeGreetingSuccess,
                   shouldShow: state is MyHomePageInitial,
-                  welcomeGreetingTextSize: welcomeGreetingTextSize,
                   padding: screenPadding,
                 );
               }
@@ -86,7 +82,6 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                 return _LargeScreenContent(
                   height: height,
                   width: width,
-                  welcomeGreetingTextSize: welcomeGreetingTextSize,
                   padding: screenPadding,
                 );
               }
@@ -94,7 +89,6 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
               /// should be small or medium screens.
               return _SmallScreenContent(
                 padding: screenPadding,
-                welcomeGreetingTextSize: welcomeGreetingTextSize,
               );
             },
           );
@@ -121,13 +115,11 @@ class _SmallScreenContent extends StatelessWidget {
   static const double _iconAndInfoSpacing = 16;
   static const double _photoSize = 32;
   static const double _photoBorderRadius = 4;
-  final Size welcomeGreetingTextSize;
   final EdgeInsetsGeometry padding;
   final double horizontalPadding;
   final double verticalPadding;
 
   _SmallScreenContent({
-    required this.welcomeGreetingTextSize,
     required this.padding,
   })  : horizontalPadding = padding.horizontal / 2,
         verticalPadding = padding.vertical / 2;
@@ -169,7 +161,7 @@ class _SmallScreenContent extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: nameWidth,
-                    child: const TitleText(
+                    child: const DisplayLargeText(
                       'Kin (Nathan) Chan',
                       textAlign: TextAlign.center,
                       maxFontSize: 32,
@@ -185,9 +177,9 @@ class _SmallScreenContent extends StatelessWidget {
               )
             ],
           ),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               SizedBox(
                 height: 8,
               ),
@@ -210,7 +202,6 @@ class _SmallScreenContent extends StatelessWidget {
 class _LargeScreenContent extends StatelessWidget {
   final double height;
   final double width;
-  final Size welcomeGreetingTextSize;
   final EdgeInsetsGeometry padding;
   final double horizontalPadding;
   final double verticalPadding;
@@ -218,13 +209,17 @@ class _LargeScreenContent extends StatelessWidget {
   _LargeScreenContent({
     required this.height,
     required this.width,
-    required this.welcomeGreetingTextSize,
     required this.padding,
   })  : horizontalPadding = padding.horizontal / 2,
         verticalPadding = padding.vertical / 2;
 
   @override
   Widget build(BuildContext context) {
+    final welcomeGreetingTextStyle = Theme.of(context).textTheme.displayLarge!;
+    final Size welcomeGreetingTextSize = TextUtils.calculateTextSize(
+        'Hello world !',
+        style: welcomeGreetingTextStyle);
+
     return Center(
       child: TweenAnimationBuilder(
           tween: Tween<double>(begin: 0.0, end: 1.0),
@@ -249,7 +244,7 @@ class _LargeScreenContent extends StatelessWidget {
                                 height: welcomeGreetingTextSize.height,
                                 child: const Align(
                                     alignment: Alignment.bottomLeft,
-                                    child: TitleText('Hello world !')),
+                                    child: DisplayLargeText('Hello world !')),
                               ),
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -263,11 +258,11 @@ class _LargeScreenContent extends StatelessWidget {
                           flex: 1,
                           child: SizedBox.shrink(),
                         ),
-                        Expanded(
+                        const Expanded(
                           flex: 6,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               _MyLargePhotoWidget(),
                             ],
                           ),
@@ -289,14 +284,12 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
   final double height;
   final double width;
   final EdgeInsetsGeometry padding;
-  final Size welcomeGreetingTextSize;
   final ScreenSizeType screenSizeType;
 
   const _AnimatedGreetingSentenceWidget({
     required this.height,
     required this.width,
     required this.padding,
-    required this.welcomeGreetingTextSize,
     required this.screenSizeType,
     required this.shouldMove,
     required this.shouldShow,
@@ -304,7 +297,27 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = Theme.of(context).primaryTextTheme.titleLarge!;
+    final themeData = Theme.of(context);
+
+    TextStyle titleStyle;
+
+    switch (screenSizeType) {
+      case ScreenSizeType.big:
+        titleStyle = themeData.textTheme.displayLarge!;
+        break;
+      case ScreenSizeType.medium:
+        titleStyle = themeData.textTheme.displayMedium!;
+        break;
+      case ScreenSizeType.small:
+        titleStyle = themeData.textTheme.headlineSmall!;
+        break;
+      default:
+        titleStyle = themeData.textTheme.displaySmall!;
+    }
+
+    final Size welcomeGreetingTextSize =
+        TextUtils.calculateTextSize('Hello world !', style: titleStyle);
+
     double top;
     double left;
 
@@ -359,14 +372,10 @@ class _IntroductionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AutoSizeText(
+    return BodyLargeText(
       S.of(context).home_page_intro_statement,
       overflow: TextOverflow.ellipsis,
       textAlign: TextAlign.justify,
-      style: const TextStyle(
-        fontSize: 18.0,
-        fontWeight: FontWeight.bold,
-      ),
       maxLines: 15,
       stepGranularity: 0.1,
     );
@@ -393,8 +402,15 @@ class _ExternalLinkWidget extends StatelessWidget {
             iconSize: iconSize,
             onPressed: () async {
               final uri = Uri.parse(externalType.url);
+
               if (!await launchUrl(uri)) {
                 throw Exception('Could not launch $uri');
+              }
+
+              if (context.mounted) {
+                context
+                    .read<AnalyticsBloc>()
+                    .add(AnalyticsOutLinkButtonPressed(externalType.name));
               }
             },
             icon: Image.asset(

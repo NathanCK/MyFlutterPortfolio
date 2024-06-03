@@ -136,3 +136,6 @@ app.*.symbols
 .fvm/*
 .fvm
 
+# firebase related
+/.firebaserc
+/.firebase

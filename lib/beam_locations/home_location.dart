@@ -6,7 +6,7 @@ class HomeLocation extends BeamLocation<BeamState> {
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     return <BeamPage>[
-      const BeamPage(key: ValueKey('Home'), child: MyHomePage())
+      const BeamPage(name: 'Home', key: ValueKey('Home'), child: MyHomePage())
     ];
   }
 

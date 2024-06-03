@@ -46,6 +46,13 @@ dependencies:
     sdk: flutter
   intl: any
   url_launcher: ^6.1.10
+  conway_game_of_life:
+    git:
+      url: https://github.com/NathanCK/game-of-life.git
+      ref: main
+  firebase_core: ^2.10.0
+  firebase_analytics: ^10.2.1
+  meta: ^1.8.0
 
 dev_dependencies:
   flutter_test:
