@@ -101,19 +101,19 @@ class DrawerButton extends StatefulWidget {
 }
 
 class _DrawerButtonState extends State<DrawerButton> {
-  late final MaterialStatesController materialStatesController;
+  late final WidgetStatesController materialStatesController;
 
   @override
   void initState() {
-    materialStatesController = MaterialStatesController();
-    materialStatesController.update(MaterialState.selected, widget.isSelected);
+    materialStatesController = WidgetStatesController();
+    materialStatesController.update(WidgetState.selected, widget.isSelected);
 
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant DrawerButton oldWidget) {
-    materialStatesController.update(MaterialState.selected, widget.isSelected);
+    materialStatesController.update(WidgetState.selected, widget.isSelected);
 
     super.didUpdateWidget(oldWidget);
   }
