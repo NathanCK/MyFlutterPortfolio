@@ -53,7 +53,6 @@ class SelectedTimelineCard extends StatelessWidget {
         break;
       case null:
       case ScreenSizeType.small:
-      default:
         title = HeadlineSmallText(data.title);
         date = LabelSmallText(
             '${data.startDate.toStringMY()} - ${data.endDate.toStringMY()}');

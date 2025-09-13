@@ -33,7 +33,6 @@ class ExperienceScreen extends StatelessWidget {
             break;
 
           case ScreenSizeType.small:
-          default:
             timelineSettings = const TimelineSettings();
         }
 

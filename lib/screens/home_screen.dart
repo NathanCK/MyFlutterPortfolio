@@ -59,8 +59,6 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
               screenPadding =
                   const EdgeInsets.symmetric(horizontal: 30, vertical: 50);
               break;
-            default:
-              screenPadding = const EdgeInsets.all(20);
           }
 
           return BlocBuilder<MyHomePageBloc, MyHomePageState>(
@@ -311,8 +309,6 @@ class _AnimatedGreetingSentenceWidget extends StatelessWidget {
       case ScreenSizeType.small:
         titleStyle = themeData.textTheme.headlineSmall!;
         break;
-      default:
-        titleStyle = themeData.textTheme.displaySmall!;
     }
 
     final Size welcomeGreetingTextSize =

@@ -132,10 +132,10 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 
 # fvm related
-.fvm/flutter_sdk
-.fvm/*
-.fvm
 
 # firebase related
 /.firebaserc
 /.firebase
+
+# FVM Version Cache
+.fvm/

@@ -1,10 +1,9 @@
 import 'package:beamer/beamer.dart';
-import 'package:conway_game_of_life/game_board.dart';
+import 'package:conway_game_of_life/game_of_life_board.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_website/beam_locations/app_path.dart';
 import 'package:my_flutter_website/beam_locations/experience_location.dart';
 import 'package:my_flutter_website/beam_locations/home_location.dart';
-import 'package:my_flutter_website/enum/nav_bar_type.dart';
 import 'package:my_flutter_website/widgets/app_dock.dart';
 
 class AppScreen extends StatelessWidget {
@@ -22,7 +21,7 @@ class AppScreen extends StatelessWidget {
               HomeLocation(),
               ExperienceLocation(),
             ],
-          ),
+          ).call,
           notFoundRedirectNamed: AppPath.home,
         );
 
@@ -38,13 +37,11 @@ class AppScreen extends StatelessWidget {
               child: Stack(children: [
                 Opacity(
                   opacity: 0.3,
-                  child: GameBoard(
-                    height: boxConstraints.maxHeight,
-                    width: boxConstraints.maxWidth,
+                  child: GameOfLife(
                     cellSize: 7,
-                    duration: const Duration(milliseconds: 500),
-                    shouldAutoStart: true,
+                    autoStart: true,
                     showControlPanel: false,
+                    speed: Duration(milliseconds: 500),
                   ),
                 ),
                 Beamer(
@@ -62,17 +59,5 @@ class AppScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );
     });
-  }
-
-  NavBarType _getNavBarType(double screenHeight, double screenWidth) {
-    if (screenHeight <= 400 || screenWidth <= 375) {
-      return NavBarType.drawer;
-    }
-
-    if (screenWidth >= 820) {
-      return NavBarType.navRail;
-    }
-
-    return NavBarType.botNavBar;
   }
 }
