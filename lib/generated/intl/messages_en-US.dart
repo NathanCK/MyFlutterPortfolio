@@ -22,7 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "home_page_intro_statement": MessageLookupByLibrary.simpleMessage(
-            "I\'m Nathan Chan and I\'m a software developer with a focus on mobile and backend development. Over the past two years, I have gained extensive experience in building cross-platform mobile applications using Flutter and developing backend systems using C#. My passion for technology has led me to become a dedicated and skilled software engineer, with a strong foundation in computer science and a commitment to delivering high-quality solutions.")
-      };
+    "home_page_intro_statement": MessageLookupByLibrary.simpleMessage(
+      "I\'m Nathan Chan and I\'m a software developer with 4+ years of experience specializing in Flutter development and cross-platform mobile applications. Delivered high-impact apps for event organizers. Skilled in Redux, Async Redux, Riverpod, and Flutter Navigator 2.0 for scalable architecture and seamless UX. Additional experience in full-stack development using Python/Django, React, JavaScript, and .NET. Committed to building reliable, testable software in agile, fast-paced environments.",
+    ),
+  };
 }

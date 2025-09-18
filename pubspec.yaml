@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   flutter_web_plugins:
     sdk: flutter
 
@@ -43,8 +45,6 @@ dependencies:
   animated_text_kit: ^4.2.2
   auto_size_text: ^3.0.0
   intl_utils: ^2.8.2
-  flutter_localizations:
-    sdk: flutter
   intl: any
   url_launcher: ^6.1.10
   conway_game_of_life:
