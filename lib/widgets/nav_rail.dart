@@ -1,31 +1,19 @@
 import 'dart:math';
-
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_flutter_website/utils/nav_item.dart';
 
 class NavRail extends StatefulWidget {
-  final BeamerDelegate beamerDelegate;
-
-  const NavRail({super.key, required this.beamerDelegate});
+  const NavRail({super.key});
 
   @override
   State<NavRail> createState() => _NavRailState();
 }
 
 class _NavRailState extends State<NavRail> {
-  void _setStateListener() => setState(() {});
-
   int _currentIndex = 0;
   bool extendedRail = false;
   NavigationRailLabelType railLabelType = NavigationRailLabelType.selected;
-
-  @override
-  void initState() {
-    super.initState();
-
-    widget.beamerDelegate.addListener(_setStateListener);
-  }
 
   _collapseRail() {
     setState(() {
@@ -45,8 +33,7 @@ class _NavRailState extends State<NavRail> {
 
   @override
   Widget build(BuildContext context) {
-    final currentPath =
-        (context.currentBeamLocation.state as BeamState).uri.path;
+    final currentPath = GoRouter.of(context).state.matchedLocation;
     _currentIndex = NavItem.getMatchIndex(currentPath);
 
     final NavigationRailThemeData navigationRailTheme =
@@ -68,8 +55,7 @@ class _NavRailState extends State<NavRail> {
         destinations: _getNavItemList(),
         onDestinationSelected: (targetedIndex) {
           if (_currentIndex != targetedIndex) {
-            widget.beamerDelegate
-                .beamToNamed(NavItem.values[targetedIndex].url);
+            context.go(NavItem.values[targetedIndex].locationName);
             _collapseRail();
           }
         },
@@ -88,12 +74,6 @@ class _NavRailState extends State<NavRail> {
               padding: EdgeInsets.zero),
         )
         .toList();
-  }
-
-  @override
-  void dispose() {
-    widget.beamerDelegate.removeListener(_setStateListener);
-    super.dispose();
   }
 }
 

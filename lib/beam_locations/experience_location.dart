@@ -1,42 +1,43 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_flutter_website/beam_locations/app_path.dart';
+import 'package:my_flutter_website/beam_locations/constants.dart';
 import 'package:my_flutter_website/screens/experience_detail_screen.dart';
 import 'package:my_flutter_website/screens/experience_screen.dart';
 
-class ExperienceLocation extends BeamLocation<BeamState> {
+class ExperienceRouter extends AppRouter {
   @override
-  List<BeamPage> buildPages(BuildContext context, BeamState state) {
-    final List<BeamPage> pages = [
-      const BeamPage(
-          key: ValueKey('ExperienceScreen'), child: ExperienceScreen()),
-    ];
+  RouteBase buildRoutes() {
+    return GoRoute(
+      name: AppRouteNames.experience,
+      path: 'experience',
+      builder: (context, state) => ExperienceScreen(),
+      routes: [
+        GoRoute(
+          name: AppRouteNames.experienceDetails,
+          path: ':id',
+          pageBuilder: (context, state) {
+            final id = int.parse(state.pathParameters['id']!);
 
-    if (state.pathParameters.containsKey('experienceId')) {
-      final id = int.parse(state.pathParameters['experienceId']!);
+            return CustomTransitionPage(
+                barrierDismissible: true,
+                opaque: false,
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+                child: ExperienceDetailPage(id: id));
+          },
+          redirect: (context, state) {
+            final id = int.tryParse(state.pathParameters['id']!);
+            if (id == null) {
+              return AppRouteNames.experience;
+            }
 
-      pages.add(
-        BeamPage(
-          key: ValueKey('experienceId-$id'),
-          child: ExperienceDetailPage(id: id),
-          routeBuilder: (context, settings, child) {
-            return PageRouteBuilder(
-              settings: settings,
-              opaque: false,
-              pageBuilder: (_, __, ___) => child,
-            );
+            return null;
           },
         ),
-      );
-    }
-
-    return pages;
+      ],
+    );
   }
-
-  @override
-  List<Pattern> get pathPatterns => [
-        AppPath.experience,
-        AppPath.experienceDetail,
-      ];
 }

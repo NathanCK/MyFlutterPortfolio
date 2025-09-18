@@ -1,15 +1,16 @@
-import 'package:beamer/beamer.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_flutter_website/beam_locations/app_path.dart';
 import 'package:my_flutter_website/bloc/analytics_bloc.dart';
 import 'package:my_flutter_website/bloc/app_status_bloc.dart';
 import 'package:my_flutter_website/firebase_options.dart';
 import 'package:my_flutter_website/generated/l10n.dart';
-import 'package:my_flutter_website/screens/app_screen.dart';
+import 'package:my_flutter_website/screens/app_background.dart';
 import 'package:my_flutter_website/utils/my_theme.dart';
 
 Future<void> main() async {
@@ -18,8 +19,7 @@ Future<void> main() async {
   final AppStatusBloc appStatusBloc = AppStatusBloc();
   final AnalyticsBloc analyticsBloc = AnalyticsBloc();
 
-  // usePathUrlStrategy();
-  Beamer.setPathUrlStrategy(); // Github Pages doesn't support that for now
+  usePathUrlStrategy(); // Github Pages doesn't support that for now
 
   FirebaseAnalytics? analyticsInstance;
   try {
@@ -37,20 +37,11 @@ Future<void> main() async {
     navigatorObservers.add(observer);
   }
 
-  final routerDelegate = BeamerDelegate(
-    initialPath: '/home',
-    locationBuilder: RoutesLocationBuilder(
-      routes: {
-        '*': (context, state, data) =>
-            AppScreen(navigatorObservers: navigatorObservers),
-      },
-    ),
-    notFoundRedirectNamed: AppPath.home,
-  );
+  final router = MainRouter().initializeRouter();
 
   runApp(MyApp(
     appStatusBloc: appStatusBloc,
-    routerDelegate: routerDelegate,
+    router: router,
     analyticsBloc: analyticsBloc,
   ));
 }
@@ -68,14 +59,14 @@ Future<void> _init() async {
 class MyApp extends StatelessWidget {
   final AppStatusBloc appStatusBloc;
   final AnalyticsBloc analyticsBloc;
-  final BeamerDelegate routerDelegate;
+  final GoRouter _router;
 
   const MyApp({
     super.key,
-    required this.routerDelegate,
+    required GoRouter router,
     required this.appStatusBloc,
     required this.analyticsBloc,
-  });
+  }) : _router = router;
 
   @override
   Widget build(BuildContext context) {
@@ -91,14 +82,27 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
           ],
           supportedLocales: S.delegate.supportedLocales,
-          routerDelegate: routerDelegate,
-          routeInformationParser: BeamerParser(),
+          routerConfig: _router,
+          builder: (context, child) {
+            final foregroundScreen = child ?? const SizedBox.shrink();
+
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: AppBackground(),
+                ),
+                foregroundScreen,
+              ],
+            );
+          },
           theme: lightTheme.copyWith(
-              bottomNavigationBarTheme: myBottomNavigationBarThemeData,
-              navigationRailTheme: myNavigationRailThemeData,
-              extensions: [
-                myDrawerLightTheme,
-              ]),
+            bottomNavigationBarTheme: myBottomNavigationBarThemeData,
+            navigationRailTheme: myNavigationRailThemeData,
+            scaffoldBackgroundColor: Colors.transparent,
+            extensions: [
+              myDrawerLightTheme,
+            ],
+          ),
         ));
   }
 }

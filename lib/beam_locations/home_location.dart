@@ -1,15 +1,15 @@
-import 'package:beamer/beamer.dart';
-import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
+import 'package:my_flutter_website/beam_locations/app_path.dart';
+import 'package:my_flutter_website/beam_locations/constants.dart';
 import 'package:my_flutter_website/screens/home_screen.dart';
 
-class HomeLocation extends BeamLocation<BeamState> {
+class HomeRouter extends AppRouter {
   @override
-  List<BeamPage> buildPages(BuildContext context, BeamState state) {
-    return <BeamPage>[
-      const BeamPage(name: 'Home', key: ValueKey('Home'), child: MyHomePage())
-    ];
+  RouteBase buildRoutes() {
+    return GoRoute(
+      name: AppRouteNames.home,
+      path: 'home',
+      builder: (context, state) => MyHomePage(),
+    );
   }
-
-  @override
-  List<Pattern> get pathPatterns => ['/home/*'];
 }

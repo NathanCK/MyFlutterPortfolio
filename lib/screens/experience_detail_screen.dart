@@ -1,7 +1,6 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_flutter_website/beam_locations/app_path.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_flutter_website/bloc/experience_detail_bloc.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
 import 'package:my_flutter_website/widgets/timeline/timeline_detail_card.dart';
@@ -47,7 +46,7 @@ class _ExperienceDetailPageContent extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Beamer.of(context).popToNamed(AppPath.experience);
+                context.pop();
               },
             ),
             Center(

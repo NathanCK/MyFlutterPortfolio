@@ -1,36 +1,26 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_flutter_website/utils/my_theme.dart';
 import 'package:my_flutter_website/utils/nav_item.dart';
 import 'package:my_flutter_website/widgets/button_selection_clipper_path.dart';
 
 class AppDrawer extends StatefulWidget {
-  final GlobalKey<BeamerState> beamerKey;
-
-  const AppDrawer({super.key, required this.beamerKey});
+  const AppDrawer({super.key});
 
   @override
   State<AppDrawer> createState() => _AppDrawerState();
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  void _setStateListener() => setState(() {});
-
-  late final BeamerDelegate _beamerDelegate;
-
   @override
   void initState() {
     super.initState();
-    _beamerDelegate = widget.beamerKey.currentState!.routerDelegate;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) => widget
-        .beamerKey.currentState?.routerDelegate
-        .addListener(_setStateListener));
   }
 
   @override
   Widget build(BuildContext context) {
     final drawerTheme = Theme.of(context).extension<MyDrawerTheme>()!;
-    final path = (context.currentBeamLocation.state as BeamState).uri.path;
+    final path = GoRouter.of(context).state.matchedLocation;
     final screenWidth = MediaQuery.of(context).size.width;
     final drawerWidth = screenWidth * 0.4;
     return Drawer(
@@ -52,8 +42,8 @@ class _AppDrawerState extends State<AppDrawer> {
           itemBuilder: (context, index) {
             final navItem = navItemList[index];
             return DrawerButton(
-                onPressed: () => _beamerDelegate.beamToNamed(navItem.url),
-                isSelected: currentPath.contains(navItem.url),
+                onPressed: () => context.go(navItem.locationName),
+                isSelected: currentPath.contains(navItem.locationName),
                 child: Row(
                   children: [
                     navItem.icon,
@@ -75,12 +65,6 @@ class _AppDrawerState extends State<AppDrawer> {
           },
           itemCount: navItemList.length),
     );
-  }
-
-  @override
-  void dispose() {
-    _beamerDelegate.removeListener(_setStateListener);
-    super.dispose();
   }
 }
 

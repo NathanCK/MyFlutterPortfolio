@@ -64,34 +64,42 @@ class SelectedTimelineCard extends StatelessWidget {
         }
     }
 
-    return Material(
-      type: MaterialType.transparency,
-      child: Container(
-        padding: padding,
-        margin: margin,
-        decoration: decoration,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (data.icon != null)
-              Center(
-                child: SizedBox(
-                  height: 200,
-                  child: data.icon!,
-                ),
-              ),
-            _defaultSpace,
-            title,
-            if (subTitle != null) subTitle,
-            date,
-            if (longDescription != null) ...[
-              _defaultSpace,
-              longDescription,
-            ],
-          ],
-        ),
+    return Container(
+      padding: padding,
+      margin: margin,
+      decoration: decoration,
+      child: CustomScrollView(
+        shrinkWrap: true,
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (data.icon != null)
+                      Center(
+                        child: SizedBox(
+                          height: 200,
+                          child: data.icon!,
+                        ),
+                      ),
+                    _defaultSpace,
+                    title,
+                    if (subTitle != null) subTitle,
+                    date,
+                    if (longDescription != null) ...[
+                      _defaultSpace,
+                      longDescription,
+                    ],
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

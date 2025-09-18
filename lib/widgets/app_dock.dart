@@ -1,64 +1,45 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_flutter_website/utils/nav_item.dart';
 
 /// TODO: maybe can combine with the game controller.
 class AppDock extends StatefulWidget {
-  final GlobalKey<BeamerState> beamerKey;
-
-  const AppDock({super.key, required this.beamerKey});
+  const AppDock({
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _AppDockState();
 }
 
 class _AppDockState extends State<AppDock> {
-  static const double hight = 40; // TODO: should resize based on screen size.
-  static const double wight = 160;
+  static const double height = 40; // TODO: should resize based on screen size.
+  static const double width = 160;
   static const List<NavItem> navItems = NavItem.values;
-
-  void _setStateListener() => setState(() {});
-
-  late final BeamerDelegate _beamerDelegate;
-
-  @override
-  void initState() {
-    super.initState();
-    _beamerDelegate = widget.beamerKey.currentState!.routerDelegate;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) => widget
-        .beamerKey.currentState?.routerDelegate
-        .addListener(_setStateListener));
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: hight,
-      width: wight,
+      height: height,
+      width: width,
       decoration: BoxDecoration(
         color: const Color(0xFFB19E6D),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.black),
       ),
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(
-              navItems.length,
-              (index) => _ControlButton(
-                    iconWidget: navItems[index].icon,
-                    onPressed: () {
-                      _beamerDelegate.beamToNamed(
-                        navItems[index].url,
-                      );
-                    },
-                  ))),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          navItems.length,
+          (index) => _ControlButton(
+            iconWidget: navItems[index].icon,
+            onPressed: () {
+              context.goNamed(navItems[index].locationName);
+            },
+          ),
+        ),
+      ),
     );
-  }
-
-  @override
-  void dispose() {
-    _beamerDelegate.removeListener(_setStateListener);
-    super.dispose();
   }
 }
 
