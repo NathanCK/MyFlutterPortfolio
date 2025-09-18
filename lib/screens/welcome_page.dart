@@ -5,8 +5,8 @@ import 'package:my_flutter_website/routes/constants.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
 import 'package:my_flutter_website/utils/text_utils.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+class WelcomePage extends StatelessWidget {
+  const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {

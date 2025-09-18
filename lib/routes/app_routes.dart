@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_flutter_website/routes/experience_routes.dart';
 import 'package:my_flutter_website/routes/home_routes.dart';
-import 'package:my_flutter_website/screens/welcome_screen.dart';
+import 'package:my_flutter_website/screens/welcome_page.dart';
 import 'package:my_flutter_website/widgets/app_dock.dart';
 
 abstract class AppRouter {
@@ -42,7 +42,7 @@ class MainRouter {
         GoRoute(
           path: '/',
           builder: (context, state) {
-            return WelcomeScreen();
+            return WelcomePage();
           },
           routes: [shellRoutes],
         ),

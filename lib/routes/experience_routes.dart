@@ -11,7 +11,7 @@ class ExperienceRouter extends AppRouter {
     return GoRoute(
       name: AppRouteNames.experience,
       path: 'experience',
-      builder: (context, state) => ExperienceListScreen(),
+      builder: (context, state) => ExperienceListPage(),
       routes: [
         GoRoute(
           name: AppRouteNames.experienceDetails,

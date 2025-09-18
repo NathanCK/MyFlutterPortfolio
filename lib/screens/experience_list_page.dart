@@ -7,8 +7,8 @@ import 'package:my_flutter_website/widgets/timeline/timeline.dart';
 import 'package:my_flutter_website/widgets/timeline/timeline_card.dart';
 import 'package:my_flutter_website/widgets/timeline/timeline_settings.dart';
 
-class ExperienceListScreen extends StatelessWidget {
-  const ExperienceListScreen({super.key});
+class ExperienceListPage extends StatelessWidget {
+  const ExperienceListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
