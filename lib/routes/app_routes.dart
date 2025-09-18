@@ -10,11 +10,18 @@ abstract class AppRouter {
 }
 
 class MainRouter {
+  final GlobalKey<NavigatorState> _rootNavigatorKey =
+      GlobalKey<NavigatorState>();
+
+  final GlobalKey<NavigatorState> _shellNavigatorKey =
+      GlobalKey<NavigatorState>();
+
   GoRouter initializeRouter() {
     final homeRoutes = HomeRouter().buildRoutes();
     final experienceRoutes = ExperienceRouter().buildRoutes();
 
     final shellRoutes = ShellRoute(
+      navigatorKey: _shellNavigatorKey,
       routes: [
         homeRoutes,
         experienceRoutes,
@@ -30,6 +37,7 @@ class MainRouter {
     );
 
     return GoRouter(
+      navigatorKey: _rootNavigatorKey,
       routes: [
         GoRoute(
           path: '/',

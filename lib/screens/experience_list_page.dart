@@ -7,8 +7,8 @@ import 'package:my_flutter_website/widgets/timeline/timeline.dart';
 import 'package:my_flutter_website/widgets/timeline/timeline_card.dart';
 import 'package:my_flutter_website/widgets/timeline/timeline_settings.dart';
 
-class ExperienceScreen extends StatelessWidget {
-  const ExperienceScreen({super.key});
+class ExperienceListScreen extends StatelessWidget {
+  const ExperienceListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class ExperienceScreen extends StatelessWidget {
             );
           },
           onCardTap: (context, index) {
-            context.pushNamed(
+            context.goNamed(
               AppRouteNames.experienceDetails,
               pathParameters: {'id': timelineEventModels[index].id.toString()},
             );

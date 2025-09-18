@@ -5,10 +5,10 @@ import 'package:my_flutter_website/bloc/experience_detail_bloc.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
 import 'package:my_flutter_website/widgets/timeline/timeline_detail_card.dart';
 
-class ExperienceDetailPage extends StatelessWidget {
+class ExperienceDetailsPage extends StatelessWidget {
   final int id;
 
-  const ExperienceDetailPage({
+  const ExperienceDetailsPage({
     super.key,
     required this.id,
   });

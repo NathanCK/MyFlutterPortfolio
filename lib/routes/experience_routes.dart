@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_flutter_website/routes/app_routes.dart';
 import 'package:my_flutter_website/routes/constants.dart';
-import 'package:my_flutter_website/screens/experience_detail_screen.dart';
-import 'package:my_flutter_website/screens/experience_screen.dart';
+import 'package:my_flutter_website/screens/experience_details_page.dart';
+import 'package:my_flutter_website/screens/experience_list_page.dart';
 
 class ExperienceRouter extends AppRouter {
   @override
@@ -11,7 +11,7 @@ class ExperienceRouter extends AppRouter {
     return GoRoute(
       name: AppRouteNames.experience,
       path: 'experience',
-      builder: (context, state) => ExperienceScreen(),
+      builder: (context, state) => ExperienceListScreen(),
       routes: [
         GoRoute(
           name: AppRouteNames.experienceDetails,
@@ -26,7 +26,7 @@ class ExperienceRouter extends AppRouter {
                     (context, animation, secondaryAnimation, child) {
                   return FadeTransition(opacity: animation, child: child);
                 },
-                child: ExperienceDetailPage(id: id));
+                child: ExperienceDetailsPage(id: id));
           },
           redirect: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!);
