@@ -4,31 +4,54 @@ import 'package:my_flutter_website/models/timeline_event_model.dart';
 /// TODO: can store it on firestore or something like that.
 final timelineEventModels = [
   TimelineEventModel(
-    1,
-    DateTime(2016, 9),
-    DateTime(2019, 12),
-    'BA in Computer Science',
-    subtitle: 'University of Minnesota - Twin Cities',
-    longDescription: '• Graduated with GPA 3.360.'
-        '\n• Have taken fundamental courses, including Algorithms & Data Structures, and Program Design & Development.'
-        '\n• Have taken advanced level courses, such as Operating Systems, and Computer Network.',
-    timelineDotWidget: const Icon(
-      Icons.book,
-    ),
-    icon: const Image(image: AssetImage('assets/icons/umn_goldy_icon.png')),
+    6,
+    DateTime(2023, 6),
+    DateTime(2025, 5),
+    'Mobile Application Developer',
+    subtitle: 'PheedLoop',
+    icon: const Image(image: AssetImage('assets/icons/pheedloop_logo.jpeg')),
+    shortDescription: 'Flutter, Dart, Python, React',
+    longDescription:
+        '''• Developed and maintained multiple Flutter applications, including the legacy and revamped versions of PheedLoop Go!, a dedicated event organizer app, and 50+ customized white-labeled versions tailored to client-specific branding, theming, and feature requests.
+• Contributed to PheedLoop Go!, which achieved 15K+ monthly downloads across the App Store and Google Play, and ranked in the top 20 of the Events category on Google Play in Canada.
+• Enhanced real-time capabilities by integrating Firebase to support messaging and dynamic data storage.
+• Improved the user experience on the web version of the revamped PheedLoop Go! by implementing Flutter's Navigator 2.0 for declarative routing and seamless URL synchronization.
+• Optimized app architecture by applying Redux, Async Redux, and Riverpod selectively across multiple Flutter apps, tailoring state management to each app's needs and scale.
+• Improved code quality by writing comprehensive unit and widget tests throughout the development cycle.
+• Participated in full-stack development, implementing backend endpoints using Python and Django, and developing frontend features with React and JavaScript.
+• Led the end-to-end release process for multiple apps on the App Store and Google Play.
+• Enhanced customer experience by collaborating closely with the Customer Support team to troubleshoot and resolve production issues.''',
   ),
   TimelineEventModel(
-    2,
-    DateTime(2019, 10),
-    DateTime(2020, 3),
-    'Software Engineer Internship',
-    subtitle: 'DeFiner Inc.',
-    shortDescription: 'HTML, CSS, Javascript, and Angular',
+    5,
+    DateTime(2022, 1),
+    DateTime(2023, 1),
+    'Mobile Development Engineer',
+    subtitle: 'Signify',
+    shortDescription: 'Flutter, Dart',
     longDescription:
-        '• Designed, implemented, and refined prototypes for a multitude of unique user interfaces, inspiring action around the results.'
-        '\n• Used technology to solve straightforward user interface and UX problems, seeking input and guidance from team members.'
-        '\n• Turned a defined software and UX design into code, and delivered it on schedule using languages, libraries, and rendering technologies (e.g. JavaScript, Node.js, Angular, HTML, CSS).',
-    icon: const Image(image: AssetImage('assets/icons/DeFiner_icon.png')),
+        '• Revamped the original WiZ app that controls WiZ Connected smart devices using Flutter technology for cross-platform purpose.'
+        '\n• Implemented new UI and features for over 10K+ users.'
+        '\n• Used BLoC design pattern as the foundation of development process.'
+        '\n• Wrote Flutter unit tests to ensure the functionality of the WiZ V2 app.'
+        '\n• Experienced with RESTful API concepts and SQLite database.'
+        '\n• Involved in an agile development environment with different teams for sprint planning, refinement, grooming, and daily stand-up meetings.',
+    icon: const Image(image: AssetImage('assets/icons/Signify_icon.png')),
+  ),
+  TimelineEventModel(
+    4,
+    DateTime(2021, 7),
+    DateTime(2021, 12),
+    'Software Engineer',
+    subtitle: 'Computer And Technologies Holdings Limited',
+    shortDescription: 'Flutter, Dart',
+    longDescription:
+        '• Implemented new features and maintained the functionality of production level of iOS and Android point-of-sale(P.O.S) app and an inventory management app using Flutter, Dart, and BLoC design pattern.'
+        '\n• Designed and delivered new features and maintain the back-end server to fulfill the need of the mobile P.O.S app using .Net framework.'
+        '\n• Cooperated with engineers, support team and BA to complete Statement of Work and solve incidents from users using Waterfall methodology.'
+        '\n• Designed unique user interfaces and created mock-up screens on Figma.'
+        '\n• Integrated front-end and back-end elements using RESTful api.'
+        '\n• Interacted with a third-party iOS app for payment purpose.',
   ),
   TimelineEventModel(
     3,
@@ -47,34 +70,30 @@ final timelineEventModels = [
     icon: const Image(image: AssetImage('assets/icons/OATI_icon.png')),
   ),
   TimelineEventModel(
-    4,
-    DateTime(2021, 7),
-    DateTime(2021, 12),
-    'Software Engineer',
-    subtitle: 'Computer And Technologies Holdings Limited',
-    shortDescription: 'Flutter, Dart',
+    2,
+    DateTime(2019, 10),
+    DateTime(2020, 3),
+    'Software Engineer Internship',
+    subtitle: 'DeFiner Inc.',
+    shortDescription: 'HTML, CSS, Javascript, and Angular',
     longDescription:
-        '• Implemented new features and maintained the functionality of production level of iOS and Android point-of-sale(P.O.S) app and an inventory management app using Flutter, Dart, and BLoC design pattern.'
-        '\n• Designed and delivered new features and maintain the back-end server to fulfill the need of the mobile P.O.S app using .Net framework.'
-        '\n• Cooperated with engineers, support team and BA to complete Statement of Work and solve incidents from users using Waterfall methodology.'
-        '\n• Designed unique user interfaces and created mock-up screens on Figma.'
-        '\n• Integrated front-end and back-end elements using RESTful api.'
-        '\n• Interacted with a third-party iOS app for payment purpose.',
+        '• Designed, implemented, and refined prototypes for a multitude of unique user interfaces, inspiring action around the results.'
+        '\n• Used technology to solve straightforward user interface and UX problems, seeking input and guidance from team members.'
+        '\n• Turned a defined software and UX design into code, and delivered it on schedule using languages, libraries, and rendering technologies (e.g. JavaScript, Node.js, Angular, HTML, CSS).',
+    icon: const Image(image: AssetImage('assets/icons/DeFiner_icon.png')),
   ),
   TimelineEventModel(
-    5,
-    DateTime(2022, 1),
-    DateTime(2023, 1),
-    'Mobile Development Engineer',
-    subtitle: 'Signify',
-    shortDescription: 'Flutter, Dart',
-    longDescription:
-        '• Revamped the original WiZ app that controls WiZ Connected smart devices using Flutter technology for cross-platform purpose.'
-        '\n• Implemented new UI and features for over 10K+ users.'
-        '\n• Used BLoC design pattern as the foundation of development process.'
-        '\n• Wrote Flutter unit tests to ensure the functionality of the WiZ V2 app.'
-        '\n• Experienced with RESTful API concepts and SQLite database.'
-        '\n• Involved in an agile development environment with different teams for sprint planning, refinement, grooming, and daily stand-up meetings.',
-    icon: const Image(image: AssetImage('assets/icons/Signify_icon.png')),
+    1,
+    DateTime(2016, 9),
+    DateTime(2019, 12),
+    'BA in Computer Science',
+    subtitle: 'University of Minnesota - Twin Cities',
+    longDescription: '• Graduated with GPA 3.360.'
+        '\n• Have taken fundamental courses, including Algorithms & Data Structures, and Program Design & Development.'
+        '\n• Have taken advanced level courses, such as Operating Systems, and Computer Network.',
+    timelineDotWidget: const Icon(
+      Icons.book,
+    ),
+    icon: const Image(image: AssetImage('assets/icons/umn_goldy_icon.png')),
   ),
 ];
