@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_flutter_website/beam_locations/app_path.dart';
+import 'package:my_flutter_website/routes/app_routes.dart';
 import 'package:my_flutter_website/bloc/analytics_bloc.dart';
 import 'package:my_flutter_website/bloc/app_status_bloc.dart';
 import 'package:my_flutter_website/firebase_options.dart';

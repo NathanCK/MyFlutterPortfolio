@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_website/beam_locations/constants.dart';
+import 'package:my_flutter_website/routes/constants.dart';
 
 enum NavItem {
   home('home.dart', AppRouteNames.home, Icon(Icons.home),

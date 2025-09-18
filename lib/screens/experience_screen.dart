@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_flutter_website/beam_locations/constants.dart';
+import 'package:my_flutter_website/routes/constants.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
 import 'package:my_flutter_website/utils/my_experience_data.dart';
 import 'package:my_flutter_website/widgets/timeline/timeline.dart';

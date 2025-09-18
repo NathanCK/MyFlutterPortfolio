@@ -1,7 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_flutter_website/beam_locations/constants.dart';
+import 'package:my_flutter_website/routes/constants.dart';
 import 'package:my_flutter_website/enum/screen_size_type.dart';
 import 'package:my_flutter_website/utils/text_utils.dart';
 

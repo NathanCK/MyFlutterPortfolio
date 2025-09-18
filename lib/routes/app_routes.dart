@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_flutter_website/beam_locations/experience_location.dart';
-import 'package:my_flutter_website/beam_locations/home_location.dart';
+import 'package:my_flutter_website/routes/experience_routes.dart';
+import 'package:my_flutter_website/routes/home_routes.dart';
 import 'package:my_flutter_website/screens/welcome_screen.dart';
 import 'package:my_flutter_website/widgets/app_dock.dart';
 
